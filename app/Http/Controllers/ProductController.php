@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Card;
+use App\Enums\GroupType;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
@@ -18,9 +18,11 @@ class ProductController extends Controller
         /* @var $user User */
         $user = auth()->user();
 
-        $products = $user->products;
+        $products = $user->products()->with('group')->orderByDesc('id')->get();
 
-        return view('products.index', ['products' => $products]);
+        $groups = $user->groups()->where('type', GroupType::Product)->get();
+
+        return view('products.index', compact('products', 'groups'));
     }
 
     public function edite(Product $product): Factory|View|Application
@@ -29,18 +31,24 @@ class ProductController extends Controller
         $user = auth()->user();
 
         abort_if(
-            $product->user_id != auth()->user()->id,
+            $product->user_id != $user->id,
             403,
             "You can't edite this product!");
 
-        return view('products.update', ['product' => $product]);
+        $groups = $user->groups()->where('type', GroupType::Product)->get();
+
+        $product->load('group');
+
+        return view('products.update', compact('product', 'groups'));
     }
 
     public function store(Request $request)
     {
+        // TODO should check group is of this user or not //
         $validated = $request->validate([
             'title' => 'required|string|max:40',
             'amount' => 'required|numeric|between:0,100000.99',
+            'group_id' => 'required|exists:groups,id',
         ]);
 
         /* @var $user User */
@@ -53,25 +61,27 @@ class ProductController extends Controller
 
     public function update(Product $product, Request $request): RedirectResponse
     {
+        // TODO should check group is of this user or not //
         $validated = $request->validate([
             'title' => 'string|max:40',
             'amount' => 'numeric|between:0,100000.99',
+            'group_id' => 'required|exists:groups,id'
         ]);
 
         abort_if(
-            $product->user_id != auth()->user()->id,
+            $product->user_id != auth()->id(),
             403,
             "You can't edite this card!");
 
-        $product->update($request->only(['title', 'amount']));
+        $product->update($validated);
 
         return redirect()->route('products.index');
     }
 
-    public function destroy(Product $product)
+    public function destroy(Product $product): RedirectResponse
     {
         abort_if(
-            $product->user_id != auth()->user()->id,
+            $product->user_id != auth()->id(),
             403,
             "You can't delete this card!");
 

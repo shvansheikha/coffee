@@ -19,6 +19,11 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function basket(): BelongsTo
+    {
+        return $this->belongsTo(Basket::class);
+    }
+
     public function orderable(): MorphTo
     {
         return $this->morphTo();

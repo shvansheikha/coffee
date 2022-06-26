@@ -1,15 +1,23 @@
 <div class="p-4">
-    <div class="mb-2 pb-2 w-auto">Order </div>
+    <div class="mb-2 pb-2 w-auto">Order</div>
     <form method="post" action="{{route('orders.create', $card->id)}}"
           class="flex items-center pb-4 border-b">
         @csrf
 
+        <select id="product-group"
+                class="form-select appearance-none mr-4 form-control block w-full px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none">
+            <option value="">Select Product</option>
+            @foreach ($productGroups as $group)
+                <option value="{{$group->id}}">
+                    {{$group->title}}
+                </option>
+            @endforeach
+        </select>
+
         <select
+            id="products"
             name="product"
             class="form-select appearance-none mr-4 form-control block w-full px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none">
-            @foreach($products as $product)
-                <option value="{{$product->id}}">{{$product->title}}</option>
-            @endforeach
         </select>
 
         <input type="text"

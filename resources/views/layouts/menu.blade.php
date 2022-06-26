@@ -38,6 +38,13 @@
 
             <div
                 class="border border-transparent hover:border-blue-500 transition-all duration-300 fade cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
+                <a href="{{ url('/groups') }}">
+                    <div class="w-full">Groups</div>
+                </a>
+            </div>
+
+            <div
+                class="border border-transparent hover:border-blue-500 transition-all duration-300 fade cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
                 <a class="" href="{{ route('logout') }}"
                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

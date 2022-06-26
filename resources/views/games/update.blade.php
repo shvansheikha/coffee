@@ -2,13 +2,13 @@
 @section('content')
     <div class="p-20">
         <div class="shadow p-4 rounded">
-            <form method="post" action="{{route('products.update', $product)}}"
+            <form method="post" action="{{route('games.update', $game)}}"
                   class="flex items-center pb-4 mb-4">
                 @csrf
                 {{ method_field('PUT') }}
                 <input type="text"
                        name="title"
-                       value="{{$product->title}}"
+                       value="{{$game->title}}"
                        class="mr-4 form-control block w-80 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                        placeholder="Product Title">
 
@@ -16,13 +16,13 @@
                     name="group_id"
                     class="form-select appearance-none mr-4 form-control block w-1/4 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none">
                     @foreach($groups as $group)
-                        <option value="{{$group->id}}" @if($product->group_id === $group->id)  selected @endif>{{$group->title}}</option>
+                        <option value="{{$group->id}}" @if($game->group_id === $group->id)  selected @endif>{{$group->title}}</option>
                     @endforeach
                 </select>
 
                 <input type="text"
                        name="amount"
-                       value="{{$product->amount}}"
+                       value="{{$game->amount}}"
                        class="mr-4 form-control block w-80 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                        placeholder="Product Amount">
 

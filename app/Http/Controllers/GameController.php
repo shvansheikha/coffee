@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\GroupType;
 use App\Models\Game;
 use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
@@ -17,16 +18,22 @@ class GameController extends Controller
         /* @var $user User */
         $user = auth()->user();
 
-        $games = $user->games;
+        $games = $user->games()->orderByDesc('id')->get();
 
-        return view('games.index', ['games' => $games]);
+        $groups = $user->groups()
+            ->where('type', GroupType::Game)
+            ->get();
+
+        return view('games.index', compact('games', 'groups'));
     }
 
     public function store(Request $request)
     {
+        // TODO should check group is of this user or not //
         $validated = $request->validate([
             'title' => 'required|string|max:40',
-            'amount' => 'required|numeric|between:0,100000.99',
+            'amount' => 'required|numeric|between:0,100000',
+            'group_id' => 'required|exists:groups,id'
         ]);
 
         /* @var $user User */
@@ -45,6 +52,42 @@ class GameController extends Controller
             "You can't delete this game!");
 
         $game->delete();
+
+        return redirect()->route('games.index');
+    }
+
+    public function edite(Game $game): Factory|View|Application
+    {
+        /* @var $user User */
+        $user = auth()->user();
+
+        abort_if(
+            $game->user_id != $user->id,
+            403,
+            "You can't edite this game!");
+
+        $groups = $user->groups()->where('type', GroupType::Game)->get();
+
+        $game->load('group');
+
+        return view('games.update', compact('game', 'groups'));
+    }
+
+    public function update(Game $game, Request $request): RedirectResponse
+    {
+        // TODO should check group is of this user or not //
+        $validated = $request->validate([
+            'title' => 'string|max:40',
+            'amount' => 'numeric|between:0,100000',
+            'group_id' => 'required|exists:groups,id'
+        ]);
+
+        abort_if(
+            $game->user_id != auth()->id(),
+            403,
+            "You can't edite this game!");
+
+        $game->update($validated);
 
         return redirect()->route('games.index');
     }

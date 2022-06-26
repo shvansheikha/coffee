@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Product extends Model
+class Basket extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -19,13 +19,13 @@ class Product extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function group(): BelongsTo
+    public function card(): BelongsTo
     {
-        return $this->belongsTo(Group::class);
+        return $this->belongsTo(Card::class);
     }
 
-    public function orders(): MorphMany
+    public function orders(): HasMany
     {
-        return $this->morphMany(Order::class, 'orderable');
+        return $this->hasMany(Order::class);
     }
 }

@@ -19,6 +19,11 @@ class Game extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(Group::class);
+    }
+
     public function orders(): MorphMany
     {
         return $this->morphMany(Order::class, 'orderable');

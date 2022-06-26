@@ -5,14 +5,14 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
+
     public function up()
     {
-        Schema::create('games', function (Blueprint $table) {
+        Schema::create('groups', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('title');
-            $table->unsignedBigInteger('group_id');
-            $table->float('amount');
+            $table->integer('type');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -20,6 +20,6 @@ return new class extends Migration {
 
     public function down()
     {
-        Schema::dropIfExists('games');
+        Schema::dropIfExists('groups');
     }
 };

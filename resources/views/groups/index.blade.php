@@ -1,33 +1,26 @@
 @extends('layouts.app')
 @section('content')
 
-    <div class="w-full p-4 overflow-x-auto p-20 px-40">
+    <div class="w-full overflow-x-auto p-20 px-40">
         <div class="shadow-md sm:rounded-lg">
-            <div class="p-4">
+            <div class="p-4 border-b">
 
-                <div class="my-2">Create Product</div>
-                @include('products.create')
+                <div class="my-2">Create Group</div>
+                @include('groups.create')
             </div>
+
             <table class="w-full text-sm text-left text-gray-500 cursor-pointer">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50">
                 <tr>
                     <th scope="col" class="px-6 py-3">
-                        #
-                    </th>
-                    <th scope="col" class="px-6 py-3">
                         Title
                     </th>
-
                     <th scope="col" class="px-6 py-3">
-                        Category
+                        Type
                     </th>
 
                     <th scope="col" class="px-6 py-3">
-                        Amount
-                    </th>
-
-                    <th scope="col" class="px-6 py-3">
-                        <span>Edit</span>
+                        Edite
                     </th>
 
                     <th scope="col" class="px-6 py-3">
@@ -37,41 +30,32 @@
                 </thead>
                 <tbody>
 
-                @foreach($products as $product)
+                @foreach($groups as $group)
 
                     @if($loop->last)
                         <tr class="bg-white hover:bg-gray-50">
                     @else
                         <tr class="bg-white border-b hover:bg-gray-50">
                             @endif
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                {{($loop->index)+1}}
+                            <th scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
+                                {{$group->title}}
                             </th>
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                                {{$product->title}}
-                            </th>
-
-                            <td class="px-6 py-4">
-                                {{$product->group->title}}
-                            </td>
-
-                            <td class="px-6 py-4">
-                                {{$product->amount}}
+                            <td class="px-6 py-3">
+                                {{$group->type->key}}
                             </td>
 
                             <td class="px-6 py-3">
-                                <a href="{{ route('products.edite', ['product' => $product->id]) }}"
+                                <a href="{{ route('groups.edite', ['group' => $group->id]) }}"
                                    class="hover:text-blue-500 uppercase">
                                     <div>edite</div>
                                 </a>
                             </td>
 
-                            <td class="px-6 py-4">
-                                <a href="{{ route('products.destroy', ['product' => $product->id]) }}"
-                                   class="hover:text-blue-500">
+                            <td class="px-6 py-3">
+                                <a href="{{ route('groups.destroy', ['group' => $group->id]) }}"
+                                   class="hover:text-blue-500 uppercase">
                                     <div>Delete</div>
                                 </a>
-
                             </td>
                         </tr>
                         @endforeach
@@ -80,5 +64,4 @@
             </table>
         </div>
     </div>
-
 @endsection

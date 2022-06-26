@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-    <div class="w-full p-4 overflow-x-auto p-20">
+    <div class="w-full p-4 overflow-x-auto p-20 px-40">
         <div class="shadow-md sm:rounded-lg">
             <div class="p-4">
 
@@ -16,6 +16,9 @@
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Title
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Category
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Amount
@@ -45,10 +48,16 @@
                                 {{$game->title}}
                             </th>
                             <td class="px-6 py-4">
-                                {{$game->amount}}
+                                {{$game->group->title}}
                             </td>
                             <td class="px-6 py-4">
-                                <a href="#" class="font-medium text-blue-600 hover:underline">Edit</a>
+                                {{$game->amount}}
+                            </td>
+                            <td class="px-6 py-3">
+                                <a href="{{ route('games.edite', ['game' => $game->id]) }}"
+                                   class="hover:text-blue-500 uppercase">
+                                    <div>edite</div>
+                                </a>
                             </td>
 
                             <td class="px-6 py-4">

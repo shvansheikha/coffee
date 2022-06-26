@@ -2,30 +2,35 @@
 
 namespace App\Models;
 
+use App\Enums\GroupType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Product extends Model
+class Group extends Model
 {
     use HasFactory, SoftDeletes;
 
     protected $guarded = [];
+
+    protected $casts = [
+        'type' => GroupType::class,
+    ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function group(): BelongsTo
+    public function products(): HasMany
     {
-        return $this->belongsTo(Group::class);
+        return $this->hasMany(Product::class);
     }
 
-    public function orders(): MorphMany
+    public function games(): HasMany
     {
-        return $this->morphMany(Order::class, 'orderable');
+        return $this->hasMany(Game::class);
     }
 }

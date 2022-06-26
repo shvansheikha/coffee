@@ -11,11 +11,12 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('card_id');
+            $table->unsignedBigInteger('basket_id');
             $table->morphs('orderable');
             $table->boolean('is_game')->default(false);
             $table->timestamp('started_at')->nullable();
             $table->timestamp('stopped_at')->nullable();
-            $table->integer('number');
+            $table->integer('number')->nullable();
             $table->float('amount');
             $table->float('price')->nullable();
             $table->timestamps();
