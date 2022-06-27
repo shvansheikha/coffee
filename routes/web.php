@@ -15,9 +15,9 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
 Route::middleware('auth')->group(function () {
+
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     //Cards Routes
     Route::get('/cards', [CardController::class, 'index'])->name('cards.index');
@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function () {
 
     //Basket Routes
     Route::put('{card}/update/{basket}', [BasketController::class, 'update'])->name('baskets.update');
+    Route::get('/{date}', [BasketController::class, 'index'])->name('baskets.index');
+    Route::get('baskets/{basket}', [BasketController::class, 'show'])->name('baskets.show');
 
     //Groups Routes
     Route::get('/groups', [GroupController::class, 'index'])->name('groups.index');

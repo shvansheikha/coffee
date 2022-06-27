@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\GroupType;
+use App\Models\Basket;
 use App\Models\Card;
 use App\Models\Game;
 use App\Models\Group;
@@ -46,6 +47,8 @@ class DatabaseSeeder extends Seeder
             ['title' => 'Juice', 'type' => GroupType::Product, 'children' => $juices],
         ];
 
+        $cards = collect();
+
         $user = User::factory()->create([
             'name' => 'shvana',
             'email' => 'shvansheikha@gmail.com',
@@ -81,10 +84,27 @@ class DatabaseSeeder extends Seeder
         }
 
         for ($i = 1; $i < 6; $i++) {
-            Card::factory()->create([
+            $card = Card::factory()->create([
                 'user_id' => $user->id,
                 'title' => 'Card ' . $i,
             ]);
+
+            $cards->add($card);
         }
+
+        for ($d = 8; $d > 0; $d--) {
+            for ($i = 1; $i < rand(20, 30); $i++) {
+                $card = $cards->random();
+
+                $min = rand(10, 50);
+                $basket = Basket::factory()->create([
+                    'user_id' => $user->id,
+                    'card_id' => $card->id,
+                    'created_at' => now()->subDays($d)->addMinutes($min),
+                    'closed_at' => now()->subDays($d)->addMinutes($min + rand(40, 60)),
+                ]);
+            }
+        }
+
     }
 }
