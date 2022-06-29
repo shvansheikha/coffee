@@ -6,17 +6,6 @@
       0 => 'BenSampo\\Enum\\EnumServiceProvider',
     ),
   ),
-  'charlieuki/receiptprinter' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'charlieuki\\ReceiptPrinter\\ReceiptPrinterServiceProvider',
-    ),
-    'aliases' => 
-    array (
-      'ReceiptPrinter' => 'charlieuki\\ReceiptPrinter\\Facades\\ReceiptPrinter',
-    ),
-  ),
   'hekmatinasser/verta' => 
   array (
     'providers' => 
