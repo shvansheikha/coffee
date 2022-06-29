@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(): Factory|View|Application
     {
         /* @var $user User */
         $user = auth()->user();

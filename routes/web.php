@@ -28,8 +28,9 @@ Route::middleware('auth')->group(function () {
 
     //Basket Routes
     Route::put('{card}/update/{basket}', [BasketController::class, 'update'])->name('baskets.update');
-    Route::get('/{date}', [BasketController::class, 'index'])->name('baskets.index');
-    Route::get('baskets/{basket}', [BasketController::class, 'show'])->name('baskets.show');
+    Route::get('/baskets/{date}', [BasketController::class, 'index'])->name('baskets.index');
+    Route::get('/baskets/{basket}/orders', [BasketController::class, 'show'])->name('baskets.show');
+    Route::get('/baskets/{basket}/print', [BasketController::class, 'printing'])->name('baskets.print');
 
     //Groups Routes
     Route::get('/groups', [GroupController::class, 'index'])->name('groups.index');

@@ -21,8 +21,8 @@ class BasketController extends Controller
     {
         $baskets = Basket::with(['card', 'orders'])
             ->where("user_id", auth()->id())
-            ->whereDate('created_at', '=', $date)
-            ->latest()
+            ->whereDate('closed_at', '=', $date)
+            ->orderByDesc('closed_at')
             ->get();
 
         return view('baskets.index', compact('baskets'));
@@ -39,7 +39,21 @@ class BasketController extends Controller
 
         $basketData = $this->getBasketData($productOrders, $gameOrders);
 
-        return view('baskets.show', compact('productOrders', 'gameOrders', 'basketData'));
+        return view('baskets.show', compact('productOrders', 'gameOrders', 'basketData', 'basket'));
+    }
+
+    public function printing(Basket $basket): Factory|View|Application
+    {
+        abort_if(
+            $basket->user_id != auth()->id(),
+            403,
+            "You can't see this basket!");
+
+        list($productOrders, $gameOrders) = $this->getOrders($basket);
+
+        $basketData = $this->getBasketData($productOrders, $gameOrders);
+
+        return view('printer.print', compact('productOrders', 'gameOrders', 'basketData', 'basket'));
     }
 
     public function update(Card $card, Basket $basket): RedirectResponse

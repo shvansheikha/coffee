@@ -13,6 +13,8 @@ return new class extends Migration {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('card_id');
             $table->boolean('closed')->default(false);
+            $table->float('total_price')->nullable();
+            $table->timestamp('closed_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -6,14 +6,22 @@
         <div class="text-blue-500 uppercase font-bold"><span>Total: </span><span> {{$basketData->total}} </span></div>
     </div>
 
-    <div class="mt-auto">
+    <div class="mt-auto mt-8">
+
+        <a href="{{route('baskets.print', $basket)}}" target="_blank">
+            <div
+                class="text-center w-full mt-2 border border-current hover:border-blue-500 transition-all duration-300 ease-in-out cursor-pointer hover:text-blue-500 rounded px-4 py-1">
+                Print
+            </div>
+        </a>
+
         <form method="post" action="{{route('baskets.update', ['card' => $card->id , 'basket' => $basket->id])}}"
-              class="flex items-center mt-8">
+              class="flex items-center">
             @csrf
             {{ method_field('PUT') }}
 
             <button type="submit"
-                    class="text-center w-full mt-5 border border-current hover:border-blue-500 transition-all duration-300 ease-in-out cursor-pointer hover:text-blue-500 rounded px-4 py-1">
+                    class="text-center w-full mt-2 border border-current hover:border-blue-500 transition-all duration-300 ease-in-out cursor-pointer hover:text-blue-500 rounded px-4 py-1">
                 Close
             </button>
         </form>

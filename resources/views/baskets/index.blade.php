@@ -55,11 +55,10 @@
                             </td>
 
                             <td class="px-6 py-4">
-                                <a href=""
+                                <a href="{{route('baskets.show', $basket)}}"
                                    class="hover:text-blue-500">
                                     <div>Orders</div>
                                 </a>
-
                             </td>
                         </tr>
                         @endforeach

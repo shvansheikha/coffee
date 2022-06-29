@@ -1,11 +1,16 @@
 @if (Route::has('login'))
     <div class="">
         @auth
-
             <div
                 class="border hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2 flex items-center">
-                <img class="rounded-full w-8" src="{{url('/img/default-avatar.jpg')}}">
-                <span class="ml-2"> {{ Auth::user()->name }}</span>
+
+                <a href="{{ route("home") }}">
+                    <div class="flex items-center">
+                        <img class="rounded-full w-8" src="{{url('/img/default-avatar.jpg')}}">
+                        <span class="ml-2"> {{ Auth::user()->name }}</span>
+                    </div>
+                </a>
+
             </div>
 
             <div
@@ -31,14 +36,14 @@
 
             <div
                 class="border hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
-                <a href="{{ url('/games') }}">
+                <a href="{{ route('games.index') }}">
                     <div class="w-full">Games</div>
                 </a>
             </div>
 
             <div
                 class="border hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
-                <a href="{{ url('/groups') }}">
+                <a href="{{ route('groups.index') }}">
                     <div class="w-full">Groups</div>
                 </a>
             </div>

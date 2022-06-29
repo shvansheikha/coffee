@@ -16,10 +16,11 @@ class HomeController extends Controller
     {
         $data = DB::table('baskets')
             ->select(
-                DB::raw('Date(created_at) as date'),
-                DB::raw('COUNT(created_at) as total'),
+                DB::raw('Date(closed_at) as date'),
+                DB::raw('COUNT(closed_at) as total'),
                 DB::raw('SUM(total_price) as total_price')
             )
+            ->whereNotNull('closed_at')
             ->groupBy('date')
             ->orderByDesc('date')
             ->get();

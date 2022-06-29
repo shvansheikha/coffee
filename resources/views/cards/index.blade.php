@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
-    <div class="w-full p-4 overflow-x-auto p-20">
+    <div class="w-2/3 sm:w-full p-4 overflow-x-auto md:px-20 md:py-10">
         <div class="shadow-md sm:rounded-lg">
             <div class="p-4">
 
@@ -15,11 +15,9 @@
                     <th scope="col" class="px-6 py-3">
                         Title
                     </th>
+
                     <th scope="col" class="px-6 py-3">
-                        Code
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        <span>Order</span>
+                        Order
                     </th>
 
                     <th scope="col" class="px-6 py-3">
@@ -43,9 +41,6 @@
                             <th scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
                                 {{$card->title}}
                             </th>
-                            <td class="px-6 py-3">
-                                {{$card->code}}
-                            </td>
                             <td class="px-6 py-3">
                                 <a href="{{ route('orders.index', ['card' => $card->id]) }}"
                                    class="font-medium text-blue-600 hover:underline">

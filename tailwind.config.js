@@ -6,7 +6,11 @@ module.exports = {
         "./resources/**/*.vue",
     ],
     theme: {
-    extend: {},
-  },
-  plugins: [],
+        extend: {
+            fontSize: {
+                '2xs': '8px',
+            },
+        },
+    },
+    plugins: [],
 }

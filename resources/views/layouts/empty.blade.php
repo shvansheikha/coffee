@@ -17,18 +17,7 @@
 </head>
 <body class="text-neutral-800 font-mono antialiased">
 <div class="w-full flex" id="app">
-    <div class="w-64 px-4 pt-4 shadow h-screen">
-        <a href="/">
-            <div class="w-full flex mb-10 justify-center cursor-pointer">
-                <img class="w-12" src="{{url('img/coffee-logo.png')}}">
-            </div>
-        </a>
-        @include('layouts.menu')
-    </div>
-
-    <div class="w-full h-screen flex shadow-inner overscroll-auto overflow-auto justify-center">
-        @yield('content')
-    </div>
+    @yield('content')
 </div>
 
 <script src="{{ asset('js/app.js') }}"></script>

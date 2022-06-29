@@ -6,5 +6,3 @@ const app = createApp({});
 app.component('hello-world', HelloWorld);
 
 app.mount('#app');
-
-require('./bootstrap');
