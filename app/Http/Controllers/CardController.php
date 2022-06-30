@@ -7,19 +7,20 @@ use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class CardController extends Controller
 {
-    public function index(): Factory|View|Application
+    public function index(): JsonResponse
     {
         /* @var $user User */
         $user = auth()->user();
 
         $cards = $user->cards;
 
-        return view('cards.index', ['cards' => $cards]);
+        return response()->json(['data' => $cards]);
     }
 
     public function edite(Card $card): Factory|View|Application
