@@ -23,4 +23,9 @@ class Card extends Model
     {
         return $this->hasMany(Basket::class);
     }
+
+    public function scopeOfUser($query, $user)
+    {
+        return $query->where('user_id', $user->id);
+    }
 }
