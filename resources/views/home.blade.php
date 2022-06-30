@@ -1,18 +1,23 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">{{ __('Dashboard') }}</div>
 
-    <div class="w-full px-4 pt-6 md:px-40 md:pt-20">
-        @foreach($data as $item)
-            <a href="{{route('baskets.index', $item->date)}}">
-                <div class="w-full md:flex border rounded my-2 py-2 px-6 justify-between cursor-pointer
-            hover:border-blue-500 hover:text-blue-500">
-                    <div>date: {{Verta::instance($item->date)->format('Y-m-d')}}</div>
-                    <div>total: {{$item->total}}</div>
-                    <div>total_price: {{$item->total_price}}</div>
+                    <div class="card-body">
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+
+                        {{ __('You are logged in!') }}
+                    </div>
                 </div>
-            </a>
-        @endforeach
+            </div>
+        </div>
     </div>
-
 @endsection
