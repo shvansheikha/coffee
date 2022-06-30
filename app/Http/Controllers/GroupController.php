@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Enums\GroupType;
+use App\Filters\GroupFilters;
+use App\Http\Resources\GroupResource;
 use App\Models\Card;
 use App\Models\Group;
 use App\Models\User;
@@ -13,18 +15,21 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use BenSampo\Enum\Rules\EnumKey;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 
 class GroupController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(GroupFilters $filters): AnonymousResourceCollection
     {
         /* @var $user User */
         $user = auth()->user();
 
-        $groups = $user->groups;
+        $groups = Group::ofUser($user)
+            ->filter($filters)
+            ->get();
 
-        return response()->json(['data' => $groups]);
+        return GroupResource::collection($groups);
     }
 
     public function edite(Group $group): Factory|View|Application
