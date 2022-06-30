@@ -14,8 +14,7 @@ class CardFactory extends Factory
     {
         return [
             'user_id' => 1,
-            'title' => $this->faker->words(rand(2, 3), true),
-            'code' => microtime(true)
+            'title' => $this->faker->words(rand(2, 3), true)
         ];
     }
 }
