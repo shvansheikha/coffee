@@ -29,7 +29,7 @@ class User extends Authenticatable
     ];
 
 
-    public function groups()
+    public function groups(): HasMany
     {
         return $this->hasMany(Group::class);
     }
@@ -49,7 +49,7 @@ class User extends Authenticatable
         return $this->hasMany(Game::class);
     }
 
-    public function orders()
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
