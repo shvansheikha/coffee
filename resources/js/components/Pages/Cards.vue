@@ -3,55 +3,24 @@
 
         <SideBar></SideBar>
 
-        <div class="w-full px-4 pt-6 md:px-40 md:pt-20">
-            <table class="w-full text-sm text-left text-gray-500 cursor-pointer shadow rounded">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="px-6 py-3">
-                        Title
-                    </th>
+        <div class="w-full px-4 pt-6 pb-20 md:px-40 md:pt-20 flex-grow h-screen flex flex-col shadow-inner overscroll-auto overflow-auto">
 
-                    <th scope="col" class="px-6 py-3">
-                        Order
-                    </th>
+            <div class="flex items-center pb-4 mb-4 border-b">
+                <input type="text"
+                       name="title"
+                       v-model="form.title"
+                       class="mr-4 form-control block w-80 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                       placeholder="Enter Title">
 
-                    <th scope="col" class="px-6 py-3">
-                        Edite
-                    </th>
+                <button
+                    @click="submitForm"
+                    type="submit"
+                    class="w-52 text-center border border-current hover:border-blue-500 transition-all duration-300 ease-in-out cursor-pointer hover:text-blue-500 rounded px-4 py-1">
+                    Create
+                </button>
+            </div>
 
-                    <th scope="col" class="px-6 py-3">
-                        Delete
-                    </th>
-                </tr>
-                </thead>
-                <tbody>
-
-                <tr v-for="card in cardsList" class="bg-white border-b hover:bg-gray-50">
-                    <th scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
-                        {{ card.title }}
-                    </th>
-                    <td class="px-6 py-3">
-                        <a href="/"
-                           class="font-medium text-blue-600 hover:underline">
-                            Order
-                        </a>
-                    </td>
-
-                    <td class="px-6 py-3">
-                        <a href="/" class="hover:text-blue-500 uppercase">
-                            <div>edite</div>
-                        </a>
-                    </td>
-
-                    <td class="px-6 py-3">
-                        <a href="/"
-                           class="hover:text-blue-500 uppercase">
-                            <div>Delete</div>
-                        </a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <CardsTable :cards-list="cardsList" @delete="getCardsList"></CardsTable>
         </div>
     </div>
 </template>
@@ -59,22 +28,33 @@
 
 
 import SideBar from "../utility/SideBar";
+import CardsTable from "../views/CardsTable";
 
 export default {
-    components: {SideBar},
+    components: {CardsTable, SideBar},
     data() {
         return {
-            cardsList: null
+            form: {
+                title: null
+            },
+            cardsList: null,
         }
     },
     created() {
         this.getCardsList();
     },
     methods: {
-        logout() {
-            axios.post('logout').then(() => {
-                this.$router.push({name: "Home"})
-            })
+        submitForm() {
+            axios.post('cards', this.form)
+                .then((res) => {
+                    if (res.status === 201) {
+                        this.getCardsList();
+                    }
+                    this.form.title = "";
+                })
+                .catch((error) => {
+                    // console.log(error)
+                });
         },
         getCardsList() {
             axios.get('cards')
