@@ -2,19 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Basket;
-use Carbon\Carbon;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\Request;
+use Hekmatinasser\Verta\Facades\Verta;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
-    public function index(): Factory|View|Application
+    public function index(): JsonResponse
     {
-        $data = DB::table('baskets')
+        $list = DB::table('baskets')
             ->select(
                 DB::raw('Date(closed_at) as date'),
                 DB::raw('COUNT(closed_at) as total'),
@@ -25,6 +21,12 @@ class HomeController extends Controller
             ->orderByDesc('date')
             ->get();
 
-        return view('home', compact('data'));
+        foreach ($list as $item) {
+            $item->date = Verta::instance($item->date)->format('Y-m-d');
+            $item->closed_at = $item->date;
+            $item->total_price = round($item->total_price, 0);
+        }
+
+        return response()->json(['data' => $list]);
     }
 }
