@@ -21,10 +21,6 @@ class GameController extends Controller
 
         $games = $user->games()->with(['group'])->orderByDesc('id')->get();
 
-        $groups = $user->groups()
-            ->where('type', GroupType::Game)
-            ->get();
-
         return response()->json(['data' => $games]);
     }
 
