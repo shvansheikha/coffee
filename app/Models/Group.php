@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\GroupType;
+use App\Filters\GroupFilters;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -32,5 +34,15 @@ class Group extends Model
     public function games(): HasMany
     {
         return $this->hasMany(Game::class);
+    }
+
+    public function scopeFilter($query, GroupFilters $filters): Builder
+    {
+        return $filters->apply($query);
+    }
+
+    public function scopeOfUser($query, $user)
+    {
+        return $query->where('user_id', $user->id);
     }
 }
