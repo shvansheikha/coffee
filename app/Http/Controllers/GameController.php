@@ -8,23 +8,24 @@ use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
-    public function index(): Factory|View|Application
+    public function index(): JsonResponse
     {
         /* @var $user User */
         $user = auth()->user();
 
-        $games = $user->games()->orderByDesc('id')->get();
+        $games = $user->games()->with(['group'])->orderByDesc('id')->get();
 
         $groups = $user->groups()
             ->where('type', GroupType::Game)
             ->get();
 
-        return view('games.index', compact('games', 'groups'));
+        return response()->json(['data' => $games]);
     }
 
     public function store(Request $request)
