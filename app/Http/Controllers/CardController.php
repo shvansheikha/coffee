@@ -2,75 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreCard;
+use App\Http\Requests\UpdateCard;
+use App\Http\Resources\CardResource;
 use App\Models\Card;
 use App\Models\User;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class CardController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(): AnonymousResourceCollection
     {
         /* @var $user User */
         $user = auth()->user();
 
-        $cards = $user->cards;
+        $cards = Card::orderByDesc('id')->ofUser($user)->get();
 
-        return response()->json(['data' => $cards]);
+        return CardResource::collection($cards);
     }
 
-    public function edite(Card $card): Factory|View|Application
+    public function store(StoreCard $request): CardResource
     {
-        /* @var $user User */
-        $user = auth()->user();
+        $card = Card::create(array_merge($request->validated(), ['user_id' => auth()->id()]));
 
-        abort_if(
-            $card->user_id != auth()->user()->id,
-            403,
-            "You can't edite this card!");
-
-        return view('cards.update', ['card' => $card]);
+        return CardResource::make($card);
     }
 
-    public function store(Request $request): RedirectResponse
+    public function update(Card $card, UpdateCard $request): RedirectResponse
     {
-        $validated = $request->validate(['title' => 'required|string|max:40']);
-
-        /* @var $user User */
-        $user = auth()->user();
-
-        $user->cards()->create(array_merge($validated, ['code' => microtime(true)]));
+        $card->update($request->validated());
 
         return redirect()->route('cards.index');
     }
 
-    public function update(Card $card, Request $request): RedirectResponse
+
+    public function destroy(Card $card): JsonResponse
     {
-        $request->validate(['title' => 'string|max:40']);
-
-        abort_if(
-            $card->user_id != auth()->user()->id,
-            403,
-            "You can't edite this card!");
-
-        $card->update($request->only(['title']));
-
-        return redirect()->route('cards.index');
-    }
-
-    public function destroy(Card $card)
-    {
-        abort_if(
-            $card->user_id != auth()->user()->id,
-            403,
-            "You can't delete this card!");
+        $this->authorize('delete', $card);
 
         $card->delete();
 
-        return redirect()->route('cards.index');
+        return response()->json([], 204);
     }
 }
