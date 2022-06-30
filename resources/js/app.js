@@ -1,8 +1,12 @@
-import { createApp } from 'vue'
-import HelloWorld from './components/HelloWorld.vue';
+import {createApp} from 'vue'
+import axios from 'axios'
+import router from './routes'
 
-const app = createApp({});
+require('./bootstrap')
 
-app.component('hello-world', HelloWorld);
 
-app.mount('#app');
+const app = createApp({})
+app.config.globalProperties.$axios = axios;
+app.use(router)
+app.mount('#app')
+
