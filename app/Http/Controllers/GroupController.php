@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use BenSampo\Enum\Rules\EnumKey;
@@ -16,14 +17,14 @@ use BenSampo\Enum\Rules\EnumKey;
 
 class GroupController extends Controller
 {
-    public function index(): Factory|View|Application
+    public function index(): JsonResponse
     {
         /* @var $user User */
         $user = auth()->user();
 
         $groups = $user->groups;
 
-        return view('groups.index', ['groups' => $groups]);
+        return response()->json(['data' => $groups]);
     }
 
     public function edite(Group $group): Factory|View|Application
