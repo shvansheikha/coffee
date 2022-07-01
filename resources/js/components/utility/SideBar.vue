@@ -1,11 +1,11 @@
 <template>
-    <div class="w-64 bg-white shadow px-4 h-screen">
+    <div>
         <div
             class="border-transparent hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2 flex items-center">
             <a href="">
                 <div class="flex items-center">
                     <img class="rounded-full w-8" src="img/default-avatar.jpg">
-                    <span class="ml-2"> shvana</span>
+                    <span class="ml-2">shvana</span>
                 </div>
             </a>
         </div>
@@ -20,7 +20,7 @@
         </router-link>
 
         <router-link
-            to="dashboard"
+            to="/dashboard"
             :class="(currentRouteName === 'Dashboard')?'text-blue-500 bg-gray-300' :'text-gray-800'">
             <div
                 class="border border-transparent hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
@@ -29,7 +29,7 @@
         </router-link>
 
         <router-link
-            to="cards"
+            to="/cards"
             :class="(currentRouteName === 'Cards')?'text-blue-500 bg-gray-300' :'text-gray-800'">
             <div
                 class="border border-transparent hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
@@ -38,7 +38,7 @@
         </router-link>
 
         <router-link
-            to="products"
+            to="/products"
             :class="(currentRouteName === 'Products')?'text-blue-500 bg-gray-300' :'text-gray-800 bg-grey-100'">
             <div
                 class="border border-transparent hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
@@ -48,7 +48,7 @@
 
 
         <router-link
-            to="games"
+            to="/games"
             :class="(currentRouteName === 'Games')?'text-blue-500 bg-nebula-300' :'text-gray-800 bg-grey-100'">
             <div
                 class="border border-transparent hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
@@ -58,7 +58,7 @@
 
 
         <router-link
-            to="groups"
+            to="/groups"
             :class="(currentRouteName === 'Groups')?'text-blue-500 bg-nebula-300' :'text-gray-800 bg-grey-100'">
             <div
                 class="border border-transparent hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
@@ -67,7 +67,7 @@
         </router-link>
 
         <router-link
-            to="about"
+            to="/about"
             :class="(currentRouteName === 'About')?'text-blue-500 bg-nebula-300' :'text-gray-800 bg-grey-100'">
             <div
                 class="border border-transparent hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
@@ -77,12 +77,12 @@
 
         <div
             class="border border-transparent hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
-            <a v-on:click="exampleModalShowing = true">
+            <a v-on:click="logoutModalShowing = true">
                 <div>Logout</div>
             </a>
         </div>
 
-        <Modal :showing="exampleModalShowing" @close="exampleModalShowing = false">
+        <Modal :showing="logoutModalShowing" @close="logoutModalShowing = false">
             <h2 class="text-lg font-bold text-gray-900">Logout</h2>
             <span class="mb-6 text-sm">Do you really want to logout?</span>
 
@@ -95,12 +95,11 @@
 
                 <button
                     class="px-4 py-1 rounded border ml-4 hover:border-blue-500 hover:text-blue-500"
-                    @click="exampleModalShowing = false">
+                    @click="logoutModalShowing = false">
                     Close
                 </button>
             </div>
         </Modal>
-
 
     </div>
 </template>
@@ -113,7 +112,7 @@ export default {
     components: {Modal},
     data() {
         return {
-            exampleModalShowing: false
+            logoutModalShowing: false
         }
     },
     computed: {
