@@ -2,90 +2,66 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\GroupType;
+use App\Http\Requests\StoreGameRequest;
+use App\Http\Requests\UpdateGameRequest;
+use App\Http\Resources\GameResource;
 use App\Models\Game;
-use App\Models\User;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
+use App\Models\Group;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GameController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(): AnonymousResourceCollection
     {
-        /* @var $user User */
-        $user = auth()->user();
+        $games = Game::orderByDesc('id')
+            ->ofUser(auth()->user())
+            ->get();
 
-        $games = $user->games()->with(['group'])->orderByDesc('id')->get();
-
-        return response()->json(['data' => $games]);
+        return GameResource::collection($games);
     }
 
-    public function store(Request $request)
+    public function store(StoreGameRequest $request): GameResource
     {
-        // TODO should check group is of this user or not //
-        $validated = $request->validate([
-            'title' => 'required|string|max:40',
-            'amount' => 'required|numeric|between:0,100000',
-            'group_id' => 'required|exists:groups,id'
-        ]);
+        // Check group is for this user
+        $exists = Group::query()
+            ->ofUser(auth()->user())
+            ->where('id', $request->validated()['group_id'])
+            ->exists();
 
-        /* @var $user User */
-        $user = auth()->user();
-
-        $user->games()->create($validated);
-
-        return redirect()->route('games.index');
-    }
-
-    public function destroy(Game $game): RedirectResponse
-    {
-        abort_if(
-            $game->user_id != auth()->user()->id,
+        abort_unless(
+            $exists,
             403,
-            "You can't delete this game!");
+            "Selected Group is not for you!");
+
+        $game = Game::create(array_merge($request->validated(), ['user_id' => auth()->id()]));
+
+        return GameResource::make($game);
+    }
+
+    public function update(Game $game, UpdateGameRequest $request): GameResource
+    {
+        // Check group is for this user
+        if ($request->validated()['group_id']) {
+            $exists = Group::query()
+                ->ofUser(auth()->user())
+                ->where('id', $request->validated()['group_id'])
+                ->exists();
+
+            abort_unless($exists, 403, "Selected Group is not for you!");
+        }
+
+        $game->update($request->validated());
+
+        return GameResource::make($game->fresh());
+    }
+
+    public function destroy(Game $game): JsonResponse
+    {
+        $this->authorize('delete', $game);
 
         $game->delete();
 
-        return redirect()->route('games.index');
-    }
-
-    public function edite(Game $game): Factory|View|Application
-    {
-        /* @var $user User */
-        $user = auth()->user();
-
-        abort_if(
-            $game->user_id != $user->id,
-            403,
-            "You can't edite this game!");
-
-        $groups = $user->groups()->where('type', GroupType::Game)->get();
-
-        $game->load('group');
-
-        return view('games.update', compact('game', 'groups'));
-    }
-
-    public function update(Game $game, Request $request): RedirectResponse
-    {
-        // TODO should check group is of this user or not //
-        $validated = $request->validate([
-            'title' => 'string|max:40',
-            'amount' => 'numeric|between:0,100000',
-            'group_id' => 'required|exists:groups,id'
-        ]);
-
-        abort_if(
-            $game->user_id != auth()->id(),
-            403,
-            "You can't edite this game!");
-
-        $game->update($validated);
-
-        return redirect()->route('games.index');
+        return response()->json([], 204);
     }
 }
