@@ -40,9 +40,9 @@
                 </td>
 
                 <td class="px-6 py-3">
-                    <a href="/" class="hover:text-blue-500 uppercase">
-                        <div>edite</div>
-                    </a>
+                    <div @click="updateForm(card)" class="hover:text-blue-500 uppercase">
+                        edite
+                    </div>
                 </td>
 
                 <td class="px-6 py-3">
@@ -51,11 +51,12 @@
             </tr>
             </tbody>
         </table>
+
         <Modal :showing="modalShowing" @close="modalShowing = false">
             <h2 class="text-lg font-bold text-gray-900">Delete Card</h2>
             <span class="mb-6 text-sm">
                 Do you really want to delete
-                <span class="text-red-600">{{ deleteItem.title }}</span>?
+                <span class="text-red-600">{{ deleteItem.title }}</span> ?
             </span>
 
             <div class="flex mt-8">
@@ -68,6 +69,32 @@
                 <button
                     class="px-4 py-1 rounded border ml-4 hover:border-blue-500 hover:text-blue-500"
                     @click="modalShowing = false">
+                    Close
+                </button>
+            </div>
+        </Modal>
+
+        <Modal :showing="updateModalShowing" @close="updateModalShowing = false">
+            <h2 class="text-lg font-bold text-gray-900">Update Card</h2>
+
+            <div class="mt-8 rounded flex items-center pb-4">
+                <input type="text"
+                       name="title"
+                       v-model="form.title"
+                       class="mr-4 form-control block w-64 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                       placeholder="Enter Title">
+            </div>
+
+            <div class="flex mt-8">
+                <button
+                    class="px-4 py-1 rounded border hover:border-blue-500 hover:text-blue-500"
+                    @click="updateCard(updateItem.id)">
+                    Update
+                </button>
+
+                <button
+                    class="px-4 py-1 rounded border ml-4 hover:border-blue-500 hover:text-blue-500"
+                    @click="updateModalShowing = false">
                     Close
                 </button>
             </div>
@@ -87,6 +114,12 @@ export default {
         return {
             deleteItem: null,
             modalShowing: false,
+            updateItem: null,
+            updateModalShowing: false,
+            form: {
+                id: null,
+                title: null
+            }
         }
     },
     methods: {
@@ -103,6 +136,25 @@ export default {
                 }).catch((error) => {
                 console.log(error.response.data.errors)
             });
+        },
+        updateForm(item) {
+            this.updateItem = item;
+            this.form.id = item.id;
+            this.form.title = item.title;
+            this.updateModalShowing = true;
+        },
+        async updateCard(id) {
+            await axios.put('cards/' + id, this.form)
+                .then((res) => {
+                    this.$emit('update');
+                })
+                .catch((error) => {
+                    console.log(error.response.data.errors)
+                });
+            this.form.id = null;
+            this.form.title = null;
+            this.updateItem = null;
+            this.updateModalShowing = false;
         }
     }
 }
