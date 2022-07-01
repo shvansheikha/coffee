@@ -1,9 +1,7 @@
 <template>
     <div class="flex w-full font-mono">
-
-        <SideBar></SideBar>
-
-        <div class="w-full px-4 pt-6 pb-20 md:px-40 md:pt-20 flex-grow h-screen flex flex-col shadow-inner overscroll-auto overflow-auto">
+        <div
+            class="w-full px-4 pt-6 pb-20 md:px-40 md:pt-20 flex-grow h-screen flex flex-col shadow-inner overscroll-auto overflow-auto">
 
             <div class="flex items-center pb-4 mb-4 border-b">
                 <input type="text"
@@ -20,18 +18,18 @@
                 </button>
             </div>
 
-            <CardsTable :cards-list="cardsList" @delete="getCardsList"></CardsTable>
+            <CardsTable
+                :cards-list="cardsList"
+                @delete="getCardsList"
+                @update="getCardsList"/>
         </div>
     </div>
 </template>
 <script>
-
-
-import SideBar from "../utility/SideBar";
 import CardsTable from "../views/CardsTable";
 
 export default {
-    components: {CardsTable, SideBar},
+    components: {CardsTable},
     data() {
         return {
             form: {
