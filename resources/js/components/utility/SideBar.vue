@@ -1,7 +1,7 @@
 <template>
     <div>
         <div
-            class="border-transparent hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2 flex items-center">
+            class="border-transparent hover:border-blue-500 transition-none cursor-pointer hover:text-blue-700 rounded px-4 py-1.5 mt-2 flex items-center">
             <a href="">
                 <div class="flex items-center">
                     <img class="rounded-full w-8" src="img/default-avatar.jpg">
@@ -10,77 +10,90 @@
             </a>
         </div>
 
-        <router-link
-            to="/"
-            :class="(currentRouteName === 'Home')?'text-blue-500 bg-gray-300' :'text-gray-800'">
-            <div
-                class="border border-transparent hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
-                Home
-            </div>
-        </router-link>
+        <ul class="flex flex-col text-gray-700 mt-6">
 
-        <router-link
-            to="/dashboard"
-            :class="(currentRouteName === 'Dashboard')?'text-blue-500 bg-gray-300' :'text-gray-800'">
-            <div
-                class="border border-transparent hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
-                Dashboard
-            </div>
-        </router-link>
+            <li>
+                <router-link
+                    to="/"
+                    class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
+                 ease-in-out transform"
+                    :class="(currentRouteName === 'Home')?'text-blue-700 bg-blue-50' :'text-gray-800'">
+                    <div>Home</div>
+                </router-link>
+            </li>
 
-        <router-link
-            to="/cards"
-            :class="(currentRouteName === 'Cards')?'text-blue-500 bg-gray-300' :'text-gray-800'">
-            <div
-                class="border border-transparent hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
-                Cards
-            </div>
-        </router-link>
+            <li>
+                <router-link
+                    to="/dashboard"
+                    class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
+                 ease-in-out transform"
+                    :class="(currentRouteName === 'Dashboard')?'text-blue-700 bg-blue-50' :'text-gray-800'">
+                    <div>Dashboard</div>
+                </router-link>
+            </li>
 
-        <router-link
-            to="/products"
-            :class="(currentRouteName === 'Products')?'text-blue-500 bg-gray-300' :'text-gray-800 bg-grey-100'">
-            <div
-                class="border border-transparent hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
-                Products
-            </div>
-        </router-link>
+            <li>
+                <router-link
+                    to="/cards"
+                    class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
+                 ease-in-out transform"
+                    :class="(currentRouteName === 'Cards')?'text-blue-700 bg-blue-50' :'text-gray-800'">
+                    <div>Cards</div>
+                </router-link>
+            </li>
 
-
-        <router-link
-            to="/games"
-            :class="(currentRouteName === 'Games')?'text-blue-500 bg-nebula-300' :'text-gray-800 bg-grey-100'">
-            <div
-                class="border border-transparent hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
-                Games
-            </div>
-        </router-link>
+            <li>
+                <router-link
+                    to="/products"
+                    class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
+                 ease-in-out transform"
+                    :class="(currentRouteName === 'Products')?'text-blue-700 bg-blue-50' :'text-gray-800 bg-grey-100'">
+                    <div>Products</div>
+                </router-link>
+            </li>
 
 
-        <router-link
-            to="/groups"
-            :class="(currentRouteName === 'Groups')?'text-blue-500 bg-nebula-300' :'text-gray-800 bg-grey-100'">
-            <div
-                class="border border-transparent hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
-                Groups
-            </div>
-        </router-link>
+            <li>
+                <router-link
+                    to="/games"
+                    class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
+                 ease-in-out transform"
+                    :class="(currentRouteName === 'Games')?'text-blue-700 bg-blue-50' :'text-gray-800 bg-grey-100'">
+                    <div>Games</div>
+                </router-link>
+            </li>
 
-        <router-link
-            to="/about"
-            :class="(currentRouteName === 'About')?'text-blue-500 bg-nebula-300' :'text-gray-800 bg-grey-100'">
-            <div
-                class="border border-transparent hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
-                About
-            </div>
-        </router-link>
 
-        <div
-            class="border border-transparent hover:border-blue-500 transition-none cursor-pointer hover:text-blue-500 rounded px-4 py-1 mt-2">
-            <a v-on:click="logoutModalShowing = true">
-                <div>Logout</div>
-            </a>
-        </div>
+            <li>
+                <router-link
+                    to="/groups"
+                    class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
+                 ease-in-out transform"
+                    :class="(currentRouteName === 'Groups')?'text-blue-700 bg-blue-50' :'text-gray-800 bg-grey-100'">
+                    <div>Groups</div>
+                </router-link>
+            </li>
+
+            <li>
+                <router-link
+                    to="/about"
+                    class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
+                 ease-in-out transform"
+                    :class="(currentRouteName === 'About')?'text-blue-700 bg-blue-50' :'text-gray-800 bg-grey-100'">
+                    <div>About</div>
+                </router-link>
+            </li>
+
+            <li>
+                <div
+                    v-on:click="logoutModalShowing = true"
+                    class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
+                 ease-in-out transform">
+                    <div>Logout</div>
+                </div>
+            </li>
+
+        </ul>
 
         <Modal :showing="logoutModalShowing" @close="logoutModalShowing = false">
             <h2 class="text-lg font-bold text-gray-900">Logout</h2>
@@ -88,13 +101,13 @@
 
             <div class="flex mt-8">
                 <button
-                    class="px-4 py-1 rounded border hover:border-blue-500 hover:text-blue-500"
+                    class="px-4 py-1.5 rounded border hover:border-blue-500 hover:text-blue-700"
                     @click="logout">
                     Yes
                 </button>
 
                 <button
-                    class="px-4 py-1 rounded border ml-4 hover:border-blue-500 hover:text-blue-500"
+                    class="px-4 py-1.5 rounded border ml-4 hover:border-blue-500 hover:text-blue-700"
                     @click="logoutModalShowing = false">
                     Close
                 </button>
