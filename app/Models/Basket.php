@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Filters\BasketFilters;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,5 +29,15 @@ class Basket extends Model
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function scopeFilter($query, BasketFilters $filters): Builder
+    {
+        return $filters->apply($query);
+    }
+
+    public function scopeOfUser(Builder $query, $user)
+    {
+        return $query->whereUserId($user->id);
     }
 }
