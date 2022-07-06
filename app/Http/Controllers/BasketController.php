@@ -2,121 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\BasketFilters;
+use App\Http\Requests\UpdateBasketRequest;
+use App\Http\Resources\BasketResource;
 use App\Models\Basket;
-use App\Models\Card;
 use App\Models\Game;
+use App\Models\Order;
 use App\Models\Product;
-use Carbon\Carbon;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use stdClass;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\DB;
 
 class BasketController extends Controller
 {
-
-    public function index($date): Factory|View|Application
+    public function index(BasketFilters $filters): AnonymousResourceCollection
     {
-        $baskets = Basket::with(['card', 'orders'])
-            ->where("user_id", auth()->id())
-            ->whereDate('closed_at', '=', $date)
+        $baskets = Basket::with('card')
+            ->ofUser(auth()->user())
+            ->filter($filters)
             ->orderByDesc('closed_at')
             ->get();
 
-        return view('baskets.index', compact('baskets'));
+        return BasketResource::collection($baskets);
     }
 
-    public function show(Basket $basket): Factory|View|Application
+    public function show(Basket $basket): BasketResource
     {
-        abort_if(
-            $basket->user_id != auth()->id(),
-            403,
-            "You can't see this basket!");
+        $this->authorize('see', $basket);
 
-        list($productOrders, $gameOrders) = $this->getOrders($basket);
-
-        $basketData = $this->getBasketData($productOrders, $gameOrders);
-
-        return view('baskets.show', compact('productOrders', 'gameOrders', 'basketData', 'basket'));
-    }
-
-    public function printing(Basket $basket): Factory|View|Application
-    {
-        abort_if(
-            $basket->user_id != auth()->id(),
-            403,
-            "You can't see this basket!");
-
-        list($productOrders, $gameOrders) = $this->getOrders($basket);
-
-        $basketData = $this->getBasketData($productOrders, $gameOrders);
-
-        return view('printer.print', compact('productOrders', 'gameOrders', 'basketData', 'basket'));
-    }
-
-    public function update(Card $card, Basket $basket): RedirectResponse
-    {
-        abort_if(
-            $card->user_id != auth()->id(),
-            403,
-            "You can't close this basket!");
-
-        list($productOrders, $gameOrders) = $this->getOrders($basket);
-
-        $totalPrice = $productOrders->sum('price') + $gameOrders->sum('price');
-
-        $basket->update([
-            'closed' => true,
-            'total_price' => $totalPrice,
-            'closed_at' => now()
-        ]);
-
-        return redirect()->route("cards.index");
-    }
-
-    public function getOrders(Basket $basket): array
-    {
-        $productOrders = $basket->orders()
-            ->with(['product' => function ($q) {
-                $q->withTrashed();
-            }, 'product.group'])
-            ->whereHasMorph('orderable', [Product::class])
-            ->orderByDesc('id')
+        $orderTotalPrice = Order::query()
+            ->select(DB::raw("SUM(price) as total_price, orderable_type"))
+            ->ofUser(auth()->user())
+            ->ofBasket($basket)
+            ->groupBy('orderable_type')
             ->get();
 
-        $gameOrders = $basket->orders()
-            ->with(['game' => function ($q) {
-                $q->withTrashed();
-            }, 'game.group'])
-            ->whereHasMorph('orderable', [Game::class])
-            ->orderByDesc('id')
-            ->get();
+        $product = $orderTotalPrice->where('orderable_type', get_class(new Product))->first();
+        $game = $orderTotalPrice->where('orderable_type', get_class(new Game))->first();
 
-        $gameOrders = $gameOrders->each(function ($order) {
-            if (!empty($order->stopped_at)) {
-                $from = Carbon::parse($order->started_at);
-                $to = Carbon::parse($order->stopped_at);
-                $diff_date = $to->diff($from);
-                $diff = "";
-                if ($diff_date->h > 0) {
-                    $diff .= $diff_date->h . ":";
-                }
-                $diff .= $diff_date->i . ":" . $diff_date->s;
-                $order->diff = $diff;
-            }
-        });
-        return array($productOrders, $gameOrders);
+        $basket->products_price = $product->total_price ?? 0;
+        $basket->games_price = $game->total_price ?? 0;
+
+        return BasketResource::make($basket);
     }
 
-    public function getBasketData($productOrders, $gameOrders): stdClass
+    public function update(Basket $basket, UpdateBasketRequest $request): BasketResource
     {
-        $basketData = new stdClass();
-        $basketData->products = $productOrders->sum('price');
-        $basketData->games = $gameOrders->sum('price');
-        $basketData->total = $productOrders->sum('price') + $gameOrders->sum('price');
+        $basket->update($request->validated());
 
-        return $basketData;
+        return BasketResource::make($basket->fresh());
     }
 }
