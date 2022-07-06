@@ -45,4 +45,9 @@ class Group extends Model
     {
         return $query->where('user_id', $user->id);
     }
+
+    public function scopeType($query, $type)
+    {
+        return $query->where('type', $type);
+    }
 }
