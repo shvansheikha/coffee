@@ -36,6 +36,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Baskets Routes
     Route::get('/baskets', [BasketController::class, 'index'])->name('baskets.index');
+    Route::get('/baskets/{basket}', [BasketController::class, 'show'])->name('baskets.show');
+    Route::put('/baskets/{basket}', [BasketController::class, 'update'])->name('baskets.update');
 
     // Orders Routes
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
