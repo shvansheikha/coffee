@@ -6,8 +6,10 @@ use App\Http\Controllers\GameController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\StopGameController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,11 +37,23 @@ Route::middleware('auth:sanctum')->group(function () {
     // Baskets Routes
     Route::get('/baskets', [BasketController::class, 'index'])->name('baskets.index');
 
+    // Orders Routes
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::post('{basket}/orders', [OrderController::class, 'store'])->name('orders.store');
+    Route::get('orders/{order}', StopGameController::class)->name('orders.stop');
+    Route::delete('orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
+
     // Groups Routes
     Route::get('/groups', [GroupController::class, 'index'])->name('groups.index');
+    Route::post('/groups', [GroupController::class, 'store'])->name('groups.store');
+    Route::put('/groups/{group}', [GroupController::class, 'update'])->name('groups.update');
+    Route::delete('/groups/{group}', [GroupController::class, 'destroy'])->name('groups.destroy');
 
     // Products Routes
     Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+    Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+    Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
 
     // Games Routes
     Route::get('/games', [GameController::class, 'index'])->name('games.index');
