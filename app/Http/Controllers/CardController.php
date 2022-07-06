@@ -13,10 +13,18 @@ class CardController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
-        /* @var $user User */
-        $user = auth()->user();
+        $cards = Card::orderByDesc('id')
+            ->ofUser(auth()->user())
+            ->get();
 
-        $cards = Card::orderByDesc('id')->ofUser($user)->get();
+        $cards->each(function ($card) {
+            $basket = $card->baskets()
+                ->firstOrCreate([
+                    'user_id' => auth()->id(),
+                    'closed' => false
+                ]);
+            $card->lastBasket = $basket;
+        });
 
         return CardResource::collection($cards);
     }
