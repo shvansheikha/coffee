@@ -52,6 +52,11 @@ class Order extends Model
         return $query->whereUserId($user->id);
     }
 
+    public function scopeOfBasket($query, $basket)
+    {
+        return $query->where('basket_id', $basket->id);
+    }
+
     public function scopeOwnProduct($query)
     {
         return $query->where('orderable_type', get_class(new Product));
