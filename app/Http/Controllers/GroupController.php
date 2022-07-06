@@ -4,17 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Enums\GroupType;
 use App\Filters\GroupFilters;
+use App\Http\Requests\StoreGroupRequest;
+use App\Http\Requests\UpdateGroupRequest;
 use App\Http\Resources\GroupResource;
-use App\Models\Card;
 use App\Models\Group;
-use App\Models\User;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use BenSampo\Enum\Rules\EnumKey;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 
@@ -22,72 +16,41 @@ class GroupController extends Controller
 {
     public function index(GroupFilters $filters): AnonymousResourceCollection
     {
-        /* @var $user User */
-        $user = auth()->user();
-
-        $groups = Group::ofUser($user)
+        $groups = Group::orderByDesc('id')
+            ->ofUser(auth()->user())
             ->filter($filters)
             ->get();
 
         return GroupResource::collection($groups);
     }
 
-    public function edite(Group $group): Factory|View|Application
+    public function store(StoreGroupRequest $request): GroupResource
     {
-        abort_if(
-            $group->user_id != auth()->user()->id,
-            403,
-            "You can't edite this group!");
-
-        return view('groups.update', compact('group'));
-    }
-
-
-    public function store(Request $request): RedirectResponse
-    {
-        $validated = $request->validate([
-            'title' => 'required|string|max:40',
-            'type' => ['required', new EnumKey(GroupType::class)],
-        ]);
-
-        /* @var $user User */
-        $user = auth()->user();
+        $validated = $request->validated();
 
         $validated['type'] = GroupType::getValue($validated['type']);
 
-        $user->groups()->create($validated);
+        $group = Group::create(array_merge($validated, ['user_id' => auth()->id()]));
 
-        return redirect()->route('groups.index');
+        return GroupResource::make($group);
     }
 
-    public function update(Group $group, Request $request)
+    public function update(Group $group, UpdateGroupRequest $request): GroupResource
     {
-        $validated = $request->validate([
-            'title' => 'string|max:40',
-            'type' => [new EnumKey(GroupType::class)],
-        ]);
-
-        abort_if(
-            $group->user_id != auth()->id(),
-            403,
-            "You can't edite this group!");
-
-        $validated['type'] = GroupType::getValue($validated['type']);
+        $validated = $request->validated();
+        $validated['type'] = GroupType::fromKey($validated['type'])->value;
 
         $group->update($validated);
 
-        return redirect()->route('groups.index');
+        return GroupResource::make($group->fresh());
     }
 
-    public function destroy(Group $group)
+    public function destroy(Group $group): JsonResponse
     {
-        abort_if(
-            $group->user_id != auth()->user()->id,
-            403,
-            "You can't delete this group!");
+        $this->authorize('delete', $group);
 
         $group->delete();
 
-        return redirect()->route('groups.index');
+        return response()->json([], 204);
     }
 }
