@@ -22,8 +22,8 @@ class HomeController extends Controller
             ->get();
 
         foreach ($list as $item) {
-            $item->date = Verta::instance($item->date)->format('Y-m-d');
             $item->closed_at = $item->date;
+            $item->date = Verta::instance($item->date)->format('Y-m-d');
             $item->total_price = round($item->total_price, 0);
         }
 
