@@ -1,6 +1,6 @@
 <template>
     <div>
-        <table class="w-full text-sm text-left text-gray-500 cursor-pointer shadow rounded">
+        <table class="w-full bg-white text-sm text-left text-gray-500 cursor-pointer rounded shadow">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50">
             <tr>
                 <th scope="col" class="px-6 py-3">
@@ -25,7 +25,9 @@
             </thead>
             <tbody>
 
-            <tr v-for="(card, index) in cardsList" class="bg-white border-b hover:bg-gray-50">
+            <tr v-for="(card, index) in cardsList"
+                class="hover:bg-gray-50"
+                :class="(index === cardsList.length -1 )?'':'border-b'">
                 <th scope="row" class="px-6 py-3 font-medium text-gray-900 whitespace-nowrap">
                     {{ index + 1 }}
                 </th>
@@ -33,10 +35,9 @@
                     {{ card.title }}
                 </th>
                 <td class="px-6 py-3">
-                    <a href="/public"
-                       class="font-medium text-blue-600 hover:underline">
+                    <div @click="goToOrder(card.basket.id)" class="font-medium text-blue-600 hover:underline">
                         Order
-                    </a>
+                    </div>
                 </td>
 
                 <td class="px-6 py-3">
@@ -155,7 +156,10 @@ export default {
             this.form.title = null;
             this.updateItem = null;
             this.updateModalShowing = false;
-        }
+        },
+        goToOrder(basketID) {
+            this.$router.push({name: "Order", params: {basket: basketID}});
+        },
     }
 }
 </script>
