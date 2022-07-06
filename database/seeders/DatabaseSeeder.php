@@ -52,7 +52,7 @@ class DatabaseSeeder extends Seeder
                 for ($r = 1; $r < rand(3, 7); $r++) {
                     $rand = rand(0, 1);
                     $orderType = $rand == 0 ? $products->random() : $games->random();
-                    $is_game = get_class($orderType) == get_class(new Game());
+                    $is_game = get_class($orderType) == get_class(new Game);
                     $order = Order::factory()
                         ->create([
                             'user_id' => $user->id,

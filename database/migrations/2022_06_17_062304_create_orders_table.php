@@ -16,7 +16,7 @@ return new class extends Migration {
             $table->boolean('is_game')->default(false);
             $table->timestamp('started_at')->nullable();
             $table->timestamp('stopped_at')->nullable();
-            $table->integer('number')->nullable();
+            $table->bigInteger('number')->nullable();
             $table->float('amount');
             $table->float('price')->nullable();
             $table->timestamps();
