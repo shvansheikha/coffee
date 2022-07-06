@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Basket;
 use App\Models\Order;
+use App\Observers\BasketObserver;
 use App\Observers\OrderObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -30,6 +32,7 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         Order::observe(OrderObserver::class);
+        Basket::observe(BasketObserver::class);
     }
 
     /**
