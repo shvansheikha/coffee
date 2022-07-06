@@ -10,8 +10,9 @@ import Cards from './components/Pages/Cards'
 import Games from './components/Pages/Games'
 import Groups from './components/Pages/Groups'
 import Baskets from './components/Pages/Baskets'
+import BasketDetail from './components/Pages/BasketDetail'
+import Order from './components/Pages/Order'
 import Products from './components/Pages/Products'
-
 
 const routes = [
     {
@@ -21,7 +22,8 @@ const routes = [
     },
     {
         path: '/about',
-        component: About
+        component: About,
+        name:"About"
     },
     {
         path: '/register',
@@ -96,7 +98,19 @@ const routes = [
         path: '/baskets/:date',
         name: "Baskets",
         component: Baskets,
-        props:true
+        props: true
+    },
+    {
+        path: '/basket-detail/:basket',
+        name: "BasketDetail",
+        component: BasketDetail,
+        props: true
+    },
+    {
+        path: '/order/:basket',
+        name: "Order",
+        component: Order,
+        props: true
     },
     {
         path: "/:catchAll(.*)",
