@@ -12,6 +12,8 @@ class BasketResource extends JsonResource
             'id' => $this->id,
             'user_id' => $this->id,
             'card_title' => $this->card->title,
+            'products_price' => round($this->products_price, 2) ?? null,
+            'games_price' => round($this->games_price, 2) ?? null,
             'total_price' => $this->total_price,
             'closed_at' => $this->closed_at,
             'created_at' => $this->created_at->format('Y-m-d H:i:s'),
