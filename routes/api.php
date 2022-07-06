@@ -29,6 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     // Cards Routes
     Route::get('/cards', [CardController::class, 'index'])->name('cards.index');
     Route::post('/cards', [CardController::class, 'store'])->name('cards.store');
+    Route::put('/cards/{card}', [CardController::class, 'update'])->name('cards.update');
     Route::delete('/cards/{card}', [CardController::class, 'destroy'])->name('cards.destroy');
 
     // Baskets Routes
