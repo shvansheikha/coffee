@@ -12,7 +12,7 @@ class GroupResource extends JsonResource
             'id' => $this->id,
             'user_id' => $this->user_id,
             'title' => $this->title,
-            'type' => $this->type,
+            'type' => $this->type->key,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];
