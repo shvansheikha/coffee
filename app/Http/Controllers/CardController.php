@@ -29,7 +29,7 @@ class CardController extends Controller
         return CardResource::collection($cards);
     }
 
-    public function store(StoreCard $request): CardResource
+    public function store(StoreCardRequest $request): CardResource
     {
         $card = Card::create(array_merge($request->validated(), ['user_id' => auth()->id()]));
 
