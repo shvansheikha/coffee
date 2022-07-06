@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\GroupType;
+use App\Filters\GameFilters;
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Http\Resources\GameResource;
@@ -12,9 +14,10 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GameController extends Controller
 {
-    public function index(): AnonymousResourceCollection
+    public function index(GameFilters $filters): AnonymousResourceCollection
     {
         $games = Game::orderByDesc('id')
+            ->filter($filters)
             ->ofUser(auth()->user())
             ->get();
 
@@ -23,10 +26,10 @@ class GameController extends Controller
 
     public function store(StoreGameRequest $request): GameResource
     {
-        // Check group is for this user
         $exists = Group::query()
             ->ofUser(auth()->user())
             ->where('id', $request->validated()['group_id'])
+            ->type(GroupType::Game)
             ->exists();
 
         abort_unless(
@@ -41,11 +44,11 @@ class GameController extends Controller
 
     public function update(Game $game, UpdateGameRequest $request): GameResource
     {
-        // Check group is for this user
         if ($request->validated()['group_id']) {
             $exists = Group::query()
                 ->ofUser(auth()->user())
                 ->where('id', $request->validated()['group_id'])
+                ->type(GroupType::Game)
                 ->exists();
 
             abort_unless($exists, 403, "Selected Group is not for you!");
