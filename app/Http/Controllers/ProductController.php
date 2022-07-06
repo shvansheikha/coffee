@@ -3,91 +3,69 @@
 namespace App\Http\Controllers;
 
 use App\Enums\GroupType;
+use App\Filters\ProductFilters;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
+use App\Http\Resources\ProductResource;
+use App\Models\Group;
 use App\Models\Product;
-use App\Models\User;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class ProductController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(ProductFilters $filters): AnonymousResourceCollection
     {
-        /* @var $user User */
-        $user = auth()->user();
+        $products = Product::orderByDesc('id')
+            ->filter($filters)
+            ->ofUser(auth()->user())
+            ->get();
 
-        $products = $user->products()->with('group')->orderByDesc('id')->get();
-
-        $groups = $user->groups()->where('type', GroupType::Product)->get();
-
-        return response()->json(['data' => $products]);
+        return ProductResource::collection($products);
     }
 
-    public function edite(Product $product): Factory|View|Application
+    public function store(StoreProductRequest $request): ProductResource
     {
-        /* @var $user User */
-        $user = auth()->user();
+        // Check group is for this user
+        $exists = Group::query()
+            ->ofUser(auth()->user())
+            ->where('id', $request->validated()['group_id'])
+            ->type(GroupType::Product)
+            ->exists();
 
-        abort_if(
-            $product->user_id != $user->id,
+        abort_unless(
+            $exists,
             403,
-            "You can't edite this product!");
+            "Selected Group is not for you!");
 
-        $groups = $user->groups()->where('type', GroupType::Product)->get();
+        $product = Product::create(array_merge($request->validated(), ['user_id' => auth()->id()]));
 
-        $product->load('group');
-
-        return view('products.update', compact('product', 'groups'));
+        return ProductResource::make($product);
     }
 
-    public function store(Request $request)
+    public function update(Product $product, UpdateProductRequest $request): ProductResource
     {
-        // TODO should check group is of this user or not //
-        $validated = $request->validate([
-            'title' => 'required|string|max:40',
-            'amount' => 'required|numeric|between:0,100000.99',
-            'group_id' => 'required|exists:groups,id',
-        ]);
+        if ($request->validated()['group_id']) {
+            $exists = Group::query()
+                ->ofUser(auth()->user())
+                ->where('id', $request->validated()['group_id'])
+                ->type(GroupType::Product)
+                ->exists();
 
-        /* @var $user User */
-        $user = auth()->user();
+            abort_unless($exists, 403, "Selected Group is not for you!");
+        }
 
-        $user->products()->create($validated);
+        $product->update($request->validated());
 
-        return redirect()->route('products.index');
+        return ProductResource::make($product->fresh());
     }
 
-    public function update(Product $product, Request $request): RedirectResponse
+    public function destroy(Product $product): JsonResponse
     {
-        // TODO should check group is of this user or not //
-        $validated = $request->validate([
-            'title' => 'string|max:40',
-            'amount' => 'numeric|between:0,100000.99',
-            'group_id' => 'required|exists:groups,id'
-        ]);
-
-        abort_if(
-            $product->user_id != auth()->id(),
-            403,
-            "You can't edite this card!");
-
-        $product->update($validated);
-
-        return redirect()->route('products.index');
-    }
-
-    public function destroy(Product $product): RedirectResponse
-    {
-        abort_if(
-            $product->user_id != auth()->id(),
-            403,
-            "You can't delete this card!");
+        $this->authorize('delete', $product);
 
         $product->delete();
 
-        return redirect()->route('products.index');
+        return response()->json([], 204);
     }
 }
