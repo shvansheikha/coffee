@@ -3,7 +3,7 @@
         <div class="w-full px-4 py-4 md:px-10 md:pt-6 lg:px-40 lg:pt-10">
 
             <div class="w-full md:flex justify-between">
-                <div class="w-2/3">
+                <div class="w-2/3 bg-white shadow rounded">
                     <OrderProductForm
                         :basket="this.basket"
                         @update-product="this.getProductOrder(); this.getBasket()"/>
