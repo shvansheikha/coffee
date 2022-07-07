@@ -1,6 +1,5 @@
 <template>
     <div class="flex w-full font-mono h-screen justify-between">
-
         <div class="w-1/2 flex flex-wrap items-center justify-center">
             <div>
                 <div class="font-bold text-2xl text-gray-900">Login to your account</div>
@@ -8,7 +7,7 @@
                 <div class="mt-4 w-full">
                     <label for="email">Email</label>
                     <input
-                        class="w-full bg-gray-100 rounded border border-gray-400 focus:outline-none focus:border-indigo-500 px-4 py-2"
+                        class="w-full bg-gray-100 rounded border border-gray-400 focus:outline-none focus:border-blue-500 px-4 py-2"
                         placeholder="Enter your email"
                         type="email"
                         v-model="form.email">
@@ -16,15 +15,20 @@
                 <div class="mt-3 w-full">
                     <label for="password">Password</label>
                     <input
-                        class="w-full bg-gray-100 rounded border border-gray-400 focus:outline-none focus:border-indigo-500 px-4 py-2"
+                        class="w-full bg-gray-100 rounded border border-gray-400 focus:outline-none focus:border-blue-500 px-4 py-2"
                         placeholder="Enter your password" type="password" v-model="form.password" name="password">
                 </div>
                 <div class="w-full mt-8">
                     <button @click.prevent="loginUser"
                             type="submit"
-                            class="w-full text-white bg-gray-800 text-center border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded">
+                            class="w-full text-white bg-gray-800 text-center border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded">
                         Sign in
                     </button>
+
+                    <div @click="goToRegisterPage"
+                         class="w-full mt-4 cursor-pointer">
+                        Don't have an account? <span class="text-blue-500">Register</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -35,7 +39,6 @@
                 <span class="text-lg font-bold">
                     Welcome Back!
                 </span>
-
             </div>
         </div>
     </div>
@@ -59,6 +62,9 @@ export default {
                 }).catch((error) => {
                 this.errors = error.response.data.errors;
             })
+        },
+        goToRegisterPage() {
+            this.$router.push({name: "Register"});
         }
     }
 }
