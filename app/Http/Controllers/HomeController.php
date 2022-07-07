@@ -16,6 +16,7 @@ class HomeController extends Controller
                 DB::raw('COUNT(closed_at) as total'),
                 DB::raw('SUM(total_price) as total_price')
             )
+            ->where('user_id', auth()->id())
             ->whereNotNull('closed_at')
             ->groupBy('date')
             ->orderByDesc('date')
