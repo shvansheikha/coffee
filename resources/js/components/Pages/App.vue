@@ -29,7 +29,7 @@ export default {
         showMenu() {
             return !(
                 this.currentRouteName === 'Login' ||
-                this.currentRouteName === 'register' ||
+                this.currentRouteName === 'Register' ||
                 this.currentRouteName === 'forgot-password' ||
                 this.currentRouteName === 'reset-password' ||
                 this.currentRouteName === '404');
