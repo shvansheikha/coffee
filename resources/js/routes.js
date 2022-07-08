@@ -13,105 +13,83 @@ import Baskets from './components/Pages/Baskets'
 import BasketDetail from './components/Pages/BasketDetail'
 import Order from './components/Pages/Order'
 import Products from './components/Pages/Products'
+import axios from "axios";
 
 const routes = [
     {
         path: '/',
         component: Home,
-        name: "Home"
+        name: "Home",
+        meta: {requiresAuth: false}
     },
     {
         path: '/about',
         component: About,
-        name:"About"
+        name: "About",
+        meta: {requiresAuth: false}
     },
     {
         path: '/register',
         component: Register,
-        name: "Register"
+        name: "Register",
+        meta: {requiresAuth: false}
     },
     {
         path: '/login',
         component: Login,
-        name: 'Login'
+        name: 'Login',
+        meta: {requiresAuth: false}
     },
     {
         path: "/dashboard",
         name: "Dashboard",
         component: Dashboard,
-        beforeEnter: (to, form, next) => {
-            axios.get('authenticated').then(() => {
-                next()
-            }).catch(() => {
-                return next({name: 'Login'})
-            })
-        }
+        meta: {requiresAuth: true}
     },
     {
         path: "/cards",
         name: "Cards",
         component: Cards,
-        beforeEnter: (to, form, next) => {
-            axios.get('authenticated').then(() => {
-                next()
-            }).catch(() => {
-                return next({name: 'Login'})
-            })
-        }
+        meta: {requiresAuth: true}
     },
     {
         path: "/games",
         name: "Games",
         component: Games,
-        beforeEnter: (to, form, next) => {
-            axios.get('authenticated').then(() => {
-                next()
-            }).catch(() => {
-                return next({name: 'Login'})
-            })
-        }
+        meta: {requiresAuth: true}
     },
     {
         path: "/groups",
         name: "Groups",
         component: Groups,
-        beforeEnter: (to, form, next) => {
-            axios.get('authenticated').then(() => {
-                next()
-            }).catch(() => {
-                return next({name: 'Login'})
-            })
-        }
+        meta: {requiresAuth: true}
     },
     {
         path: "/products",
         name: "Products",
         component: Products,
-        beforeEnter: (to, form, next) => {
-            axios.get('authenticated').then(() => {
-                next()
-            }).catch(() => {
-                return next({name: 'Login'})
-            })
-        }
+        meta: {requiresAuth: true}
     },
     {
         path: '/baskets/:date',
         name: "Baskets",
         component: Baskets,
-        props: true
+        props: true,
+        meta: {requiresAuth: true}
     },
     {
         path: '/basket-detail/:basket',
         name: "BasketDetail",
         component: BasketDetail,
-        props: true
+        props: true,
+        meta: {requiresAuth: true}
     },
     {
         path: '/order/:basket',
         name: "Order",
         component: Order,
-        props: true
+        props: true,
+        meta: {requiresAuth: true}
     },
     {
         path: "/:catchAll(.*)",
@@ -124,6 +102,19 @@ const router = createRouter({
     history: createWebHistory(),
     routes: routes
 });
+
+router.beforeEach((to, from, next) => {
+    if (to.meta.requiresAuth) {
+        axios.get('authenticated')
+            .then((response) => {
+                next();
+            }).catch(() => {
+            next("/login");
+        });
+    } else {
+        next();
+    }
+})
 
 export default router;
 
