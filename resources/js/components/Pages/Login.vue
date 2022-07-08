@@ -1,27 +1,27 @@
 <template>
-    <div class="flex w-full font-mono h-screen justify-between">
+    <div class="flex w-full font-mono h-screen justify-between bg-white">
         <div class="w-1/2 flex flex-wrap items-center justify-center">
-            <div>
+            <div class="w-1/2">
                 <div class="font-bold text-2xl text-gray-900">Login to your account</div>
-                <div class="text-sm text-gray-400">Welcome back! Please enter your details.</div>
-                <div class="mt-4 w-full">
-                    <label for="email">Email</label>
+                <div class="text-sm">Welcome back! Please enter your details.</div>
+                <div class="mt-8 w-full">
+                    <label for="email" class="text-gray-400">Email</label>
                     <input
-                        class="w-full bg-gray-100 rounded border border-gray-400 focus:outline-none focus:border-blue-500 px-4 py-2"
+                        class="w-full shadow-sm text-gray-700 rounded-md border border-gray-200 focus:outline-none focus:border-gray-500 px-4 py-1"
                         placeholder="Enter your email"
                         type="email"
                         v-model="form.email">
                 </div>
-                <div class="mt-3 w-full">
-                    <label for="password">Password</label>
+                <div class="mt-4 w-full">
+                    <label for="password" class="text-gray-400">Password</label>
                     <input
-                        class="w-full bg-gray-100 rounded border border-gray-400 focus:outline-none focus:border-blue-500 px-4 py-2"
+                        class="w-full shadow-sm text-gray-700 rounded-md border border-gray-200 focus:outline-none focus:border-gray-500 px-4 py-1"
                         placeholder="Enter your password" type="password" v-model="form.password" name="password">
                 </div>
                 <div class="w-full mt-8">
                     <button @click.prevent="loginUser"
                             type="submit"
-                            class="w-full text-white bg-gray-800 text-center border-0 py-2 px-8 focus:outline-none hover:bg-blue-600 rounded">
+                            class="w-full text-white bg-gray-800 text-center border-0 py-2 px-8 focus:outline-none hover:bg-gray-600 rounded-md">
                         Sign in
                     </button>
 
