@@ -1,24 +1,22 @@
 @if(!$gameOrders->isEmpty())
-    <table class="w-full text-left cursor-pointer mt-4">
+    <table class="w-full text-right cursor-pointer">
         <thead class="bg-gray-50 border-gray-900 border-b">
         <tr>
-            <th class="font-medium px-2 py-1">
-                Game
-            </th>
-            <th class="font-medium px-2 py-1">
-                Amount
+
+            <th scope="col" class="text-xs font-bold px-2 py-1">
+                کل
             </th>
 
-            <th class="font-medium px-2 py-1">
-                Start
+            <th scope="col" class="text-xs font-bold px-2 py-1">
+                فی
             </th>
 
-            <th class="font-medium px-2 py-1">
-                Stop
+            <th scope="col" class="text-xs font-bold px-2 py-1">
+                دقیقه
             </th>
 
-            <th class="font-medium px-2 py-1">
-                Price
+            <th scope="col" class="text-xs font-bold px-2 py-1">
+                بازی
             </th>
         </tr>
         </thead>
@@ -26,36 +24,28 @@
 
         @foreach($gameOrders as $order)
 
-            @if($loop->last)
-                <tr class="bg-white hover:bg-gray-50">
-            @else
-                <tr class="bg-white hover:bg-gray-50">
+            <tr>
+                <td class="px-2 py-1 text-xs">
+                    {{number_format($order->price)}}
+                </td>
+
+                <td class="px-2 py-1 text-xs">
+                    {{number_format ($order->amount)}}
+                </td>
+
+                <td class="px-2 py-1 text-xs">
+                    @if(!empty($order->stopped_at))
+                        {{$order->diff}}
+                    @else
+                        -
                     @endif
-                    <th class="px-2 py-1 font-medium">
-                        {{$order->game->title}} ({{$order->game->group->title}})
-                    </th>
-                    <td class="px-2 py-1">
-                        {{$order->amount}}
-                    </td>
+                </td>
 
-                    <td class="px-2 py-1">
-                        {{date('H:i:s', strtotime($order->started_at))}}
-                    </td>
-
-                    <td class="px-2 py-1">
-                        @if(!empty($order->stopped_at))
-                            {{date('H:i:s', strtotime($order->stopped_at))}}
-                            ({{$order->diff}})
-                        @else
-                            -
-                        @endif
-                    </td>
-
-                    <td class="px-2 py-1">
-                        {{$order->price}}
-                    </td>
-                </tr>
-                @endforeach
+                <th class="px-2 py-1 font-medium text-xs text-center">
+                    {{$order->game->title}}
+                </th>
+            </tr>
+        @endforeach
 
         </tbody>
     </table>

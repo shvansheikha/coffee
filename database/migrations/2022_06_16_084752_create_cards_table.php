@@ -12,7 +12,6 @@ return new class extends Migration {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('title');
-            $table->string('code');
             $table->timestamps();
             $table->softDeletes();
         });

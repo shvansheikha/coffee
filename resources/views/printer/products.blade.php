@@ -1,18 +1,22 @@
 @if(!$productOrders->isEmpty())
-    <table class="w-full text-left cursor-pointer">
+    <table class="w-full text-right cursor-pointer mb-4">
         <thead class="uppercase border-gray-900 border-b bg-gray-50">
         <tr>
-            <th scope="col" class="font-medium px-2 py-1">
-                Product
+
+            <th scope="col" class="text-xs font-bold px-2 py-1">
+                کل
             </th>
-            <th scope="col" class="font-medium px-2 py-1">
-                Number
+
+            <th scope="col" class="text-xs font-bold px-2 py-1">
+                فی
             </th>
-            <th scope="col" class="font-medium px-2 py-1">
-                Amount
+
+            <th scope="col" class="text-xs font-bold px-2 py-1">
+                تعداد
             </th>
-            <th scope="col" class="font-medium px-2 py-1">
-                Price
+
+            <th scope="col" class="text-xs font-bold px-2 py-1">
+                شرح
             </th>
         </tr>
         </thead>
@@ -20,25 +24,24 @@
 
         @foreach($productOrders as $order)
 
-            @if($loop->last)
-                <tr class="bg-white hover:bg-gray-50">
-            @else
-                <tr class="bg-white hover:bg-gray-50">
-                    @endif
-                    <th scope="row" class="px-2 py-1 font-medium">
-                        {{$order->product->title}}({{$order->product->group->title}})
-                    </th>
-                    <td class="px-2 py-1">
-                        {{$order->number}}
-                    </td>
-                    <td class="px-2 py-1">
-                        {{$order->amount}}
-                    </td>
-                    <td class="px-2 py-1">
-                        {{$order->price}}
-                    </td>
-                </tr>
-                @endforeach
+            <tr>
+                <td class="px-2 py-1 text-xs">
+                    {{number_format($order->price)}}
+                </td>
+
+                <td class="px-2 py-1 text-xs">
+                    {{number_format($order->amount)}}
+                </td>
+
+                <td class="px-2 py-1 text-xs">
+                    {{$order->number}}
+                </td>
+
+                <th scope="row" class="px-2 py-1 font-medium text-xs">
+                    <span>{{$order->product->title}}</span>
+                </th>
+            </tr>
+        @endforeach
 
         </tbody>
     </table>

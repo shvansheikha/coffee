@@ -49,7 +49,7 @@ class BasketController extends Controller
             403,
             "You can't see this basket!");
 
-        list($productOrders, $gameOrders) = $this->getOrders($basket);
+        list($productOrders, $gameOrders) = $this->getOrders($basket, false);
 
         $basketData = $this->getBasketData($productOrders, $gameOrders);
 
@@ -76,7 +76,7 @@ class BasketController extends Controller
         return redirect()->route("cards.index");
     }
 
-    public function getOrders(Basket $basket): array
+    public function getOrders(Basket $basket, $minutes = true): array
     {
         $productOrders = $basket->orders()
             ->with(['product' => function ($q) {
@@ -94,7 +94,7 @@ class BasketController extends Controller
             ->orderByDesc('id')
             ->get();
 
-        $gameOrders = $gameOrders->each(function ($order) {
+        $gameOrders = $gameOrders->each(function ($order) use ($minutes) {
             if (!empty($order->stopped_at)) {
                 $from = Carbon::parse($order->started_at);
                 $to = Carbon::parse($order->stopped_at);
@@ -103,7 +103,12 @@ class BasketController extends Controller
                 if ($diff_date->h > 0) {
                     $diff .= $diff_date->h . ":";
                 }
-                $diff .= $diff_date->i . ":" . $diff_date->s;
+                $diff .= $diff_date->i;
+
+                if ($minutes) {
+                    $diff .= ":" . $diff_date->s;
+                }
+
                 $order->diff = $diff;
             }
         });

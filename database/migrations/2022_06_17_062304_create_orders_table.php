@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->timestamp('stopped_at')->nullable();
             $table->integer('number')->nullable();
             $table->float('amount');
-            $table->float('price')->nullable();
+            $table->float('price', 15)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
