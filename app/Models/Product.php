@@ -40,4 +40,11 @@ class Product extends Model
     {
         return $query->where('user_id', $user->id);
     }
+
+    public function scopeWithGroup($query)
+    {
+        return $query->with(['group' => function ($query) {
+            return $query->withTrashed();
+        }]);
+    }
 }

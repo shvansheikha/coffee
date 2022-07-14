@@ -16,7 +16,8 @@ class ProductController extends Controller
 {
     public function index(ProductFilters $filters): AnonymousResourceCollection
     {
-        $products = Product::orderByDesc('id')
+        $products = Product::withGroup()
+            ->orderByDesc('id')
             ->filter($filters)
             ->ofUser(auth()->user())
             ->get();
