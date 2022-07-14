@@ -1583,6 +1583,10 @@ video {
     width: 0.25rem;
   }
 
+  .md\:w-96 {
+    width: 24rem;
+  }
+
   .md\:max-w-2xl {
     max-width: 42rem;
   }

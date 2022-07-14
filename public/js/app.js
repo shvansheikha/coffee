@@ -23179,7 +23179,7 @@ var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_24 = {
-  "class": "mt-8 rounded-md md:flex w-80 items-center pb-4"
+  "class": "mt-8 rounded-md md:flex items-center pb-4"
 };
 var _hoisted_25 = ["value", "selected"];
 var _hoisted_26 = {
@@ -23419,7 +23419,7 @@ var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_22 = {
-  "class": "mt-8 rounded-md md:flex w-80 items-center pb-4"
+  "class": "mt-8 rounded-md md:flex items-center pb-4"
 };
 var _hoisted_23 = ["selected"];
 var _hoisted_24 = ["selected"];
@@ -23503,7 +23503,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
           return $data.form.type = $event;
         }),
-        "class": "form-select appearance-none mr-4 mt-4 md:mt-0 form-control block w-full md:w-1/4 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none"
+        "class": "form-select appearance-none mr-4 mt-4 md:mt-0 form-control block w-full md:w-2/4 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none"
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
         value: "Product",
         selected: $data.form.type === 'Product'
@@ -24026,7 +24026,7 @@ var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 );
 
 var _hoisted_24 = {
-  "class": "mt-8 rounded-md md:flex w-80 items-center pb-4"
+  "class": "mt-8 rounded-md md:flex items-center pb-4"
 };
 var _hoisted_25 = ["value", "selected"];
 var _hoisted_26 = {
