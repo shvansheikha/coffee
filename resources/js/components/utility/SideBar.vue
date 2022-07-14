@@ -1,6 +1,6 @@
 <template>
     <div class="h-full font-mono py-8">
-        <div class=" h-full flex flex-col justify-between">
+        <div class="h-full flex flex-col justify-between">
             <ul class="flex flex-col text-gray-700">
                 <li>
                     <router-link
@@ -12,7 +12,7 @@
                     </router-link>
                 </li>
 
-                <li>
+                <li v-if="userIsLogin">
                     <router-link
                         to="/dashboard"
                         class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
@@ -22,7 +22,7 @@
                     </router-link>
                 </li>
 
-                <li>
+                <li v-if="userIsLogin">
                     <router-link
                         to="/cards"
                         class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
@@ -32,7 +32,7 @@
                     </router-link>
                 </li>
 
-                <li>
+                <li v-if="userIsLogin">
                     <router-link
                         to="/products"
                         class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
@@ -43,7 +43,7 @@
                 </li>
 
 
-                <li>
+                <li v-if="userIsLogin">
                     <router-link
                         to="/games"
                         class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
@@ -54,7 +54,7 @@
                 </li>
 
 
-                <li>
+                <li v-if="userIsLogin">
                     <router-link
                         to="/groups"
                         class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
@@ -74,13 +74,33 @@
                     </router-link>
                 </li>
 
-                <li>
+                <li v-if="userIsLogin">
                     <div
                         v-on:click="logoutModalShowing = true"
                         class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
                  ease-in-out transform">
                         <div>Logout</div>
                     </div>
+                </li>
+
+                <li v-if="!userIsLogin">
+                    <router-link
+                        to="/login"
+                        class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
+                 ease-in-out transform"
+                        :class="(currentRouteName === 'Login')?'text-blue-700 bg-blue-50' :'text-gray-800 bg-grey-100'">
+                        <div>Login</div>
+                    </router-link>
+                </li>
+
+                <li v-if="!userIsLogin">
+                    <router-link
+                        to="/register"
+                        class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
+                 ease-in-out transform"
+                        :class="(currentRouteName === 'Register')?'text-blue-700 bg-blue-50' :'text-gray-800 bg-grey-100'">
+                        <div>Register</div>
+                    </router-link>
                 </li>
 
             </ul>
@@ -114,18 +134,30 @@
 
 <script>
 import Modal from "./Modal";
+import axios from "axios";
 
 export default {
     name: "SideBar",
     components: {Modal},
     data() {
         return {
-            logoutModalShowing: false
+            logoutModalShowing: false,
+            userIsLogin: false,
         }
     },
+    created() {
+        this.authenticated();
+    },
+
     computed: {
         currentRouteName() {
             return this.$route.name;
+        }
+    },
+
+    watch: {
+        $route(to, from) {
+            this.authenticated()
         }
     },
     methods: {
@@ -135,6 +167,14 @@ export default {
                     window.location.href = '/login'
                 });
         },
+        authenticated() {
+            axios.get('authenticated')
+                .then((response) => {
+                    this.userIsLogin = true;
+                }).catch(() => {
+                this.userIsLogin = false;
+            });
+        }
     }
 }
 </script>
