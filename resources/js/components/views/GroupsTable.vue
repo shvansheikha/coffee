@@ -94,7 +94,7 @@
         <Modal :showing="updateModalShowing" @close="updateModalShowing = false">
             <h2 class="text-lg font-bold text-gray-900">Update Group</h2>
 
-            <div class="mt-8 rounded-md md:flex w-80 items-center pb-4">
+            <div class="mt-8 rounded-md md:flex items-center pb-4">
                 <input type="text"
                        v-model="form.title"
                        class="mr-4 mt-4 md:mt-0 form-control block w-full md:w-2/4 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
@@ -102,7 +102,7 @@
 
                 <select
                     v-model="form.type"
-                    class="form-select appearance-none mr-4 mt-4 md:mt-0 form-control block w-full md:w-1/4 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none">
+                    class="form-select appearance-none mr-4 mt-4 md:mt-0 form-control block w-full md:w-2/4 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none">
                     <option value="Product" :selected="form.type ==='Product'">Product</option>
                     <option value="Game" :selected="form.type ==='Game'">Game</option>
 

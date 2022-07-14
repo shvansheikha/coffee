@@ -35,7 +35,7 @@
                     {{ card.title }}
                 </th>
                 <td class="px-6 py-3">
-                    <div @click="goToOrder(card.basket.id)" class="font-medium text-blue-600 hover:underline">
+                    <div @click="goToOrder(card.basket.id)" class="font-medium text-blue-600 uppercase hover:underline">
                         Order
                     </div>
                 </td>
