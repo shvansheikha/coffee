@@ -1,53 +1,53 @@
 <template>
     <div>
-        <div class="w-full bg-white text-sm text-left text-gray-500 cursor-pointer rounded-md shadow-lg">
+        <div class="w-full bg-white text-sm text-left text-gray-500 cursor-pointer rounded-md shadow-md">
             <div
                 class="text-gray-700 uppercase bg-gray-50 border-b md:flex justify-between font-medium rounded-t-md hidden md:visible">
 
-                <div class="text-center px-3 py-3 md:w-1/12 lg:w-1/12">
+                <div class="text-center px-3 py-3 md:w-1/12">
                     #
                 </div>
 
-                <div class="px-3 py-3 md:w-4/12 lg:w-4/12">
+                <div class="px-3 py-3 md:w-4/12">
                     Title
                 </div>
 
-                <div class="px-3 py-3 md:w-3/12 lg:w-3/12">
+                <div class="px-3 py-3 md:w-3/12">
                     Category
                 </div>
 
-                <div class="px-3 py-3 md:w-2/12 lg:w-2/12">
+                <div class="px-3 py-3 md:w-2/12">
                     Amount
                 </div>
 
-                <div class="px-3 py-3 md:w-1/12 lg:w-1/12 items-center flex justify-center">
+                <div class="px-3 py-3 md:w-1/12 items-center flex justify-center">
                     <span>Edit</span>
                 </div>
 
-                <div class="px-3 py-3 md:w-1/12 lg:w-1/12 items-center flex justify-center">
+                <div class="px-3 py-3 md:w-1/12 items-center flex justify-center">
                     Delete
                 </div>
             </div>
 
             <div v-for="(game, index) in gamesList"
                  class="w-full hover:bg-gray-50 md:flex md:justify-between font-medium"
-                 :class="(index === gamesList.length -1 )?'':'border-b'">
+                 :class="(index === gamesList.length -1 )?'md:hover:rounded-b-md':'border-b'">
 
-                <div class="hidden md:block text-center px-3 py-3 md:w-1/12 lg:w-1/12">
+                <div class="hidden md:block text-center px-3 py-3 md:w-1/12">
                     {{ index + 1 }}
                 </div>
 
-                <div class="px-3 py-3 md:w-4/12 lg:w-4/12 ">
+                <div class="px-3 py-3 md:w-4/12">
                     <span class="md:hidden uppercase text-gray-700 mr-2 font-medium">Title:</span>
                     <span>{{ game.title }}</span>
                 </div>
 
-                <div class="px-3 py-3 md:w-3/12 lg:w-3/12">
+                <div class="px-3 py-3 md:w-3/12">
                     <span class="md:hidden uppercase text-gray-700 mr-2 font-medium">Category:</span>
                     <span>{{ game.group }}</span>
                 </div>
 
-                <div class="px-3 py-3 md:w-2/12 lg:w-2/12">
+                <div class="px-3 py-3 md:w-2/12">
                     <span class="md:hidden uppercase text-gray-700 mr-2 font-medium">Amount:</span>
                     <span>{{ game.amount }}</span>
                 </div>

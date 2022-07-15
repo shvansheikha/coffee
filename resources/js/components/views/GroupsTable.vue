@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="w-full bg-white text-sm text-left text-gray-500 cursor-pointer rounded-md shadow-lg">
+        <div class="w-full bg-white text-sm text-left text-gray-500 cursor-pointer rounded-md shadow-md">
             <div
                 class="text-gray-700 uppercase bg-gray-50 border-b md:flex justify-between font-medium rounded-t-md hidden md:visible">
 
@@ -27,7 +27,7 @@
 
             <div v-for="(group, index) in groupsList"
                  class="w-full hover:bg-gray-50 md:flex md:justify-between font-medium"
-                 :class="(index === groupsList.length -1 )?'':'border-b'">
+                 :class="(index === groupsList.length -1 )?'md:hover:rounded-b-md':'border-b'">
 
                 <div class="hidden md:block text-center px-3 py-3 md:w-1/12">
                     {{ index + 1 }}

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="w-full md:bg-white text-sm text-left text-gray-500 cursor-pointer md:rounded-md md:shadow-lg">
+        <div class="w-full md:bg-white text-sm text-left text-gray-500 cursor-pointer md:rounded-md md:shadow-md">
             <div
                 class="text-gray-700 uppercase bg-gray-50 border-b md:flex justify-between font-medium rounded-t-md hidden md:visible">
 

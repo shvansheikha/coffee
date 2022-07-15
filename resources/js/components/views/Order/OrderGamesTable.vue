@@ -1,6 +1,6 @@
 <template>
     <div v-if="gamesList != null && gamesList.length > 0" class="mt-4">
-        <div class="w-full bg-white text-sm text-left text-gray-500 cursor-pointer rounded-md shadow-lg">
+        <div class="w-full bg-white text-sm text-left text-gray-500 cursor-pointer rounded-md shadow-md">
             <div
                 class="text-gray-700 uppercase bg-gray-50 border-b md:flex justify-between font-medium rounded-t-md hidden md:visible">
 
