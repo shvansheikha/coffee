@@ -1,9 +1,10 @@
 <template>
     <div class="flex w-full font-mono">
-        <div class="w-full px-4 py-4 md:px-10 md:pt-6 lg:px-40 lg:pt-10">
+        <div
+            class="w-full px-8 pt-6 pb-20 md:px-10 lg:px-20 md:pt-20 flex-grow h-screen flex flex-col shadow-inner overscroll-auto overflow-auto">
 
             <div class="w-full md:flex justify-between">
-                <div class="w-2/3 bg-white shadow rounded">
+                <div class="md:w-2/3 bg-white shadow rounded-md">
                     <OrderProductForm
                         :basket="this.basket"
                         @update-product="this.getProductOrder(); this.getBasket()"/>
@@ -12,15 +13,16 @@
                         :basket="this.basket"
                         @update-game="this.getGamesOrder(); this.getBasket()"/>
                 </div>
-                <div class="w-1/3 bg-white ml-5 shadow rounded p-4 flex flex-col">
+                <div v-if="basketObject != null"
+                     class="mt-4 md:mt-0 md:w-1/3 bg-white md:ml-5 shadow rounded-md p-4 flex flex-col">
                     <div>
                         <div><span>Card: </span><span> {{ basketObject.card_title }} </span></div>
-                        <div><span>Product: </span><span> {{ basketObject.products_price }} </span></div>
-                        <div><span>Game: </span><span> {{ basketObject.games_price }} </span></div>
+                        <div><span>Product: </span><span> {{ format(basketObject.products_price) }} </span></div>
+                        <div><span>Game: </span><span> {{ format(basketObject.games_price) }} </span></div>
                         <div class="text-blue-500 uppercase font-bold">
-                            <span>Total: </span><span> {{
-                                basketObject.products_price + basketObject.games_price
-                            }} </span></div>
+                            <span>Total: </span>
+                            <span> {{ format(basketObject.products_price + basketObject.games_price) }} </span>
+                        </div>
                     </div>
 
                     <div class="mt-auto mt-8">
@@ -39,12 +41,12 @@
                         :products-list="productsList"
                         @delete="this.getProductOrder(); this.getBasket()"/>
                 </div>
+
                 <div class="">
                     <OrderGamesTable
                         :games-list="orderGamesList"
                         @delete="this.getGamesOrder(); this.getBasket()"
-                        @stop-game="this.getGamesOrder(); this.getBasket()"
-                    />
+                        @stop-game="this.getGamesOrder(); this.getBasket()"/>
                 </div>
             </div>
         </div>
@@ -73,6 +75,9 @@ export default {
         this.getBasket();
     },
     methods: {
+        format(value) {
+            return value.toString().replace(/(\d)(?=(\d{3})+([^\d]|$))/g, '$1,')
+        },
         closeBasket() {
             axios.put('baskets/' + this.basket, {closed: true})
                 .then((res) => {
