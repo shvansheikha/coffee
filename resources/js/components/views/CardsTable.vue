@@ -26,8 +26,8 @@
             </div>
 
             <div v-for="(card, index) in cardsList"
-                 class="w-full hover:bg-gray-50 md:flex md:justify-between font-medium mb-4 md:mb-0 pb-2 md:pb-0 shadow-lg md:shadow-none bg-white md:bg-inherit rounded-md md:rounded-none"
-                 :class="(index === cardsList.length -1 )?'':'md:border-b'">
+                 class="w-full hover:bg-gray-50 md:flex md:justify-between font-medium mb-4 md:mb-0 pb-2 md:pb-0 shadow-lg md:shadow-none  bg-white md:bg-transparent rounded-md md:rounded-none"
+                 :class="(index === cardsList.length -1 )?'md:hover:rounded-b-md':'md:border-b'">
 
                 <div class="hidden md:block text-center px-3 py-3 md:w-1/12">
                     {{ index + 1 }}
@@ -39,7 +39,8 @@
                 </div>
 
                 <div class="px-3 py-3 md:w-3/12">
-                    <div @click="goToOrder(card.basket.id)" class="w-full border border-gray-400 md:border-none py-2 md:py-0 rounded-md md:rounded-none text-center md:text-left bg-gray-back md:bg-inherit font-medium text-blue-600 uppercase hover:underline">
+                    <div @click="goToOrder(card.basket.id)"
+                         class="w-full border border-gray-400 md:border-none py-2 md:py-0 rounded-md md:rounded-none text-center md:text-left bg-gray-back md:bg-inherit font-medium text-blue-600 uppercase hover:underline">
                         Order
                     </div>
                 </div>
