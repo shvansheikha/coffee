@@ -1,63 +1,72 @@
 <template>
-    <div>
-        <table v-if="gamesList != null && gamesList.length > 0"
-               class="w-full text-sm text-left text-gray-500 cursor-pointer mt-4 shadow rounded">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-            <tr>
-                <th scope="col" class="px-6 text-xs  py-3">
-                    Game
-                </th>
-                <th scope="col" class="px-2 text-xs  py-3">
-                    Amount
-                </th>
+    <div
+        v-if="gamesList != null && gamesList.length > 0"
+        class="mt-4 w-full bg-white text-sm text-left text-gray-500 cursor-pointer rounded-md shadow-md">
+        <div
+            class="text-gray-700 uppercase bg-gray-50 border-b md:flex justify-between font-medium rounded-t-md hidden md:visible">
 
-                <th scope="col" class="px-2 text-xs  py-3">
-                    Started At
-                </th>
+            <div class="text-center px-3 py-3 md:w-1/12">
+                #
+            </div>
 
-                <th scope="col" class="px-2 text-xs  py-3">
-                    Stopped At
-                </th>
+            <div class="px-3 py-3 md:w-3/12">
+                Game
+            </div>
 
-                <th scope="col" class="px-2 text-xs  py-3">
-                    Price
-                </th>
-            </tr>
-            </thead>
-            <tbody>
+            <div class="px-3 py-3 md:w-2/12">
+                Amount
+            </div>
 
-            <tr v-for="order in gamesList" class="bg-white border-b hover:bg-gray-50">
-                <th scope="row" class="px-6 text-xs py-4 font-medium text-gray-900 whitespace-nowrap">
-                    {{ order.orderable_title }}
-                    <span class="text-xs">
-                 ({{ order.orderable_group_title }})
-                 </span>
-                </th>
-                <td class="px-2 text-xs py-4">
-                    {{ order.amount }}
-                </td>
+            <div class="px-3 py-3 md:w-2/12">
+                Start
+            </div>
 
-                <td class="px-2 text-xs py-4">
-                    {{ order.started_at }}
-                </td>
+            <div class="px-3 py-3 md:w-2/12">
+                Stop
+            </div>
 
-                <td class="px-2 text-xs py-4">
-                                <span v-if="(order.stopped_at != null)">
-                                    {{ order.stopped_at }}
-                                    ({{ order.diff }})
-                                </span>
-                    <span v-else>-</span>
-                </td>
+            <div class="px-3 py-3 md:w-2/12">
+                Price
+            </div>
+        </div>
 
-                <td class="px-2 text-xs py-4">
-                    <span v-if="(order.price != null)">
-                                    {{ order.price }}
-                                </span>
-                    <span v-else>-</span>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div v-for="(order, index) in gamesList"
+             class="w-full hover:bg-gray-50 md:flex md:justify-between font-medium"
+             :class="(index === gamesList.length -1 )?'md:hover:rounded-b-md':'border-b'">
+
+            <div class="hidden md:block text-center px-3 py-3 md:w-1/12">
+                {{ index + 1 }}
+            </div>
+
+            <div class="px-3 py-3 md:w-3/12">
+                <span class="md:hidden uppercase text-gray-700 mr-2 font-medium">Game:</span>
+                {{ order.orderable_title }}
+                <span class="text-xs">({{ order.orderable_group_title }})</span>
+
+            </div>
+
+            <div class="px-3 py-3 md:w-2/12">
+                <span class="md:hidden uppercase text-gray-700 mr-2 font-medium">Amount:</span>
+                <span>{{ order.amount }}</span>
+            </div>
+
+            <div class="px-3 py-3 md:w-2/12">
+                <span class="md:hidden uppercase text-gray-700 mr-2 font-medium">Start:</span>
+                <span>{{ order.started_at }}</span>
+            </div>
+
+            <div class="px-3 py-3 md:w-2/12">
+                <span class="md:hidden uppercase text-gray-700 mr-2 font-medium">Stop:</span>
+                <span v-if="(order.stopped_at != null)">{{ order.stopped_at }}({{ order.diff }})</span>
+                <span v-else>-</span>
+            </div>
+
+            <div class="px-3 py-3 md:w-2/12">
+                <span class="md:hidden uppercase text-gray-700 mr-2 font-medium">Price:</span>
+                <span v-if="(order.price != null)">{{ format(order.price) }}</span>
+                <span v-else>-</span>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -65,6 +74,11 @@ export default {
     name: 'BasketGamesTable',
     props: {
         gamesList: {}
+    },
+    methods: {
+        format(value) {
+            return value.toString().replace(/(\d)(?=(\d{3})+([^\d]|$))/g, '$1,')
+        },
     }
 }
 </script>

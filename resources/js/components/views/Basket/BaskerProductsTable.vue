@@ -1,51 +1,74 @@
 <template>
-    <table v-if="productsList != null && productsList.length > 0" class="w-full text-sm text-left text-gray-500 cursor-pointer rounded shadow">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-        <tr>
-            <th scope="col" class="px-6 text-xs py-3">
+    <div
+        v-if="productsList != null && productsList.length > 0"
+        class="w-full bg-white text-sm text-left text-gray-500 cursor-pointer rounded-md shadow-md">
+        <div
+            class="text-gray-700 uppercase bg-gray-50 border-b md:flex justify-between font-medium rounded-t-md hidden md:visible">
+
+            <div class="text-center px-3 py-3 md:w-1/12">
+                #
+            </div>
+
+            <div class="px-3 py-3 md:w-3/12">
                 Product
-            </th>
-            <th scope="col" class="px-2 text-xs py-3">
-                Number
-            </th>
-            <th scope="col" class="px-2 text-xs py-3">
+            </div>
+
+            <div class="px-3 py-3 md:w-3/12">
+                Count
+            </div>
+
+            <div class="px-3 py-3 md:w-2/12">
                 Amount
-            </th>
-            <th scope="col" class="px-2 text-xs py-3">
+            </div>
+
+            <div class="px-3 py-3 md:w-1/12">
                 Price
-            </th>
+            </div>
+        </div>
 
-        </tr>
-        </thead>
-        <tbody>
+        <div v-for="(order, index) in productsList"
+             class="w-full hover:bg-gray-50 md:flex md:justify-between font-medium"
+             :class="(index === productsList.length -1 )?'md:hover:rounded-b-md':'border-b'">
 
-        <tr v-for="order in productsList" class="bg-white border-b hover:bg-gray-50">
-            <th scope="row" class="px-6 text-xs py-3 font-medium text-gray-900 whitespace-nowrap">
+            <div class="hidden md:block text-center px-3 py-3 md:w-1/12">
+                {{ index + 1 }}
+            </div>
+
+            <div class="px-3 py-3 md:w-3/12">
+                <span class="md:hidden uppercase text-gray-700 mr-2 font-medium">Product:</span>
                 {{ order.orderable_title }}
                 <span class="text-xs">({{ order.orderable_group_title }})</span>
-            </th>
-            <td class="px-2 text-xs py-3">
-                {{ order.number }}
-            </td>
-            <td class="px-2 text-xs py-3">
-                {{ order.amount }}
-            </td>
-            <td class="px-2 text-xs py-3">
-                 <span v-if="(order.price != null)">
-                                    {{ order.price }}
-                                </span>
-                <span v-else>-</span>
-            </td>
-        </tr>
 
-        </tbody>
-    </table>
+            </div>
+
+            <div class="px-3 py-3 md:w-3/12">
+                <span class="md:hidden uppercase text-gray-700 mr-2 font-medium">Count:</span>
+                <span>{{ order.number }}</span>
+            </div>
+
+            <div class="px-3 py-3 md:w-2/12">
+                <span class="md:hidden uppercase text-gray-700 mr-2 font-medium">Amount:</span>
+                <span>{{ order.amount }}</span>
+            </div>
+
+            <div class="px-3 py-3 md:w-1/12">
+                <span class="md:hidden uppercase text-gray-700 mr-2 font-medium">Price:</span>
+                <span v-if="(order.price != null)">{{ format(order.price) }}</span>
+                <span v-else>-</span>
+            </div>
+        </div>
+    </div>
 </template>
 <script>
 export default {
     name: 'BasketProductsTable',
     props: {
         productsList: {}
+    },
+    methods: {
+        format(value) {
+            return value.toString().replace(/(\d)(?=(\d{3})+([^\d]|$))/g, '$1,')
+        },
     }
 }
 </script>
