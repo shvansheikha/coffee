@@ -1,7 +1,7 @@
 <template>
-    <div class="flex w-full font-mono h-screen justify-between bg-white">
-        <div class="w-1/2 flex flex-wrap items-center justify-center">
-            <div class="w-1/2">
+    <div class="md:flex w-full font-mono h-screen justify-between">
+        <div class="md:w-1/2 flex flex-wrap items-center justify-center">
+            <div class="mx-10 lg:mx-0 w-full mt-20 lg:mt-0 lg:w-1/2">
                 <div class="font-bold text-2xl text-gray-900">Login to your account</div>
                 <div class="text-sm">Welcome back! Please enter your details.</div>
                 <div class="mt-8 w-full">
@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div class="w-1/2 flex flex-col" style="background-image: url('img/bg-login.jpg'); background-size: cover;">
+        <div class="hidden md:block w-1/2 md:flex md:flex-col" style="background-image: url('img/bg-login.jpg'); background-size: cover;">
             <div
                 class="mt-auto p-8 text-white mb-20 mx-20 bg-gray-300 h-1/3 rounded bg-opacity-40 backdrop-blur border border-gray-200">
                 <span class="text-lg font-bold">
