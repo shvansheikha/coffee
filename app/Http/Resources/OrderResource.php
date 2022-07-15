@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Http\Resources\Json\JsonResource;
 use JsonSerializable;
@@ -16,8 +17,8 @@ class OrderResource extends JsonResource
             'orderable_group_title' => $this->orderable->group->title,
             'number' => $this->number,
             'amount' => $this->amount,
-            'started_at' => $this->started_at,
-            'stopped_at' => $this->stopped_at,
+            'started_at' => !empty($this->started_at) ? Carbon::parse($this->started_at)->format('H:i:s') : null,
+            'stopped_at' => !empty($this->stopped_at) ? Carbon::parse($this->stopped_at)->format('H:i:s') : null,
             'price' => $this->price,
             'diff' => $this->diff
         ];
