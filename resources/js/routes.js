@@ -1,7 +1,6 @@
 import {createWebHistory, createRouter} from "vue-router";
 
 import Home from './components/Pages/Home';
-import About from './components/Pages/About';
 import Register from './components/Pages/Register';
 import Login from './components/Pages/Login';
 import Dashboard from './components/Pages/Dashboard';
@@ -20,12 +19,6 @@ const routes = [
         path: '/',
         component: Home,
         name: "Home",
-        meta: {requiresAuth: false}
-    },
-    {
-        path: '/about',
-        component: About,
-        name: "About",
         meta: {requiresAuth: false}
     },
     {
