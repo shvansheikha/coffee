@@ -2,11 +2,11 @@
     <div class="text-gray-300 h-screen w-full flex items-center justify-center font-mono antialiased bg-gray-600">
         <div>
             <div>
-                <span>404 error</span>
+                <div class="font-bold text-white text-xl">404 error</div>
                 <span>page not found</span>
             </div>
             <div>
-                <span>sorry about that!</span>
+                <div>sorry about that!</div>
                 <router-link to="/" class="hover:text-blue-500">return home?</router-link>
             </div>
         </div>
