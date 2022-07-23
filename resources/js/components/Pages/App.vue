@@ -1,10 +1,10 @@
 <template>
 
-    <div class="md:flex h-screen">
+    <div class="lg:flex h-screen">
 
         <div
             v-if="showMenu"
-            class="md:h-screen md:w-1/6 px-4 w-48 hidden lg:block">
+            class="lg:h-screen w-full px-4 lg:w-60">
             <SideBar></SideBar>
         </div>
 

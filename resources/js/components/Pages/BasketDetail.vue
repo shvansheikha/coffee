@@ -3,7 +3,7 @@
         <div class="w-full px-8 pt-6 pb-20 md:px-10 lg:px-20 md:pt-20 flex-grow h-screen flex flex-col shadow-inner overscroll-auto overflow-auto">
 
             <div class="w-full md:flex justify-between">
-                <div class="w-full bg-white cursor-pointer shadow-md rounded p-4 md:flex justify-between">
+                <div class="w-full bg-white cursor-pointer shadow-md rounded p-4 md:flex justify-between hover:bg-gray-50">
                     <div><span>Card: </span><span> {{ basketObject.card_title }} </span></div>
                     <div><span>Product: </span><span> {{ basketObject.products_price }} </span></div>
                     <div><span>Game: </span><span> {{ basketObject.games_price }} </span></div>
