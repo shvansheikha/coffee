@@ -17,7 +17,7 @@ class OrderController extends Controller
     public function index(OrderFilters $filters): AnonymousResourceCollection
     {
         $orders = Order::query()
-            ->with(['orderable', 'orderable.group'])
+            ->withOrderable()
             ->ofUser(auth()->user())
             ->filter($filters)
             ->orderByDesc('id')

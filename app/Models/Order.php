@@ -67,6 +67,13 @@ class Order extends Model
         return $query->where('orderable_type', get_class(new Game));
     }
 
+    public function scopeWithOrderable($query)
+    {
+        return $query->with(['orderable', 'orderable.group' => function ($query) {
+            return $query->withTrashed();
+        }]);
+    }
+
     public function getDiffAttribute(): ?string
     {
         if (!empty($this->stopped_at)) {
