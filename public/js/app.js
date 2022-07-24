@@ -20099,7 +20099,7 @@ __webpack_require__.r(__webpack_exports__);
       groupsList: null,
       form: {
         title: null,
-        group_id: null,
+        group_id: '',
         amount: null
       }
     };
@@ -20136,7 +20136,7 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         _this3.form.title = null;
-        _this3.form.group_id = null;
+        _this3.form.group_id = '';
         _this3.form.amount = null;
       })["catch"](function (error) {// console.log(error)
       });
@@ -20168,7 +20168,7 @@ __webpack_require__.r(__webpack_exports__);
       groupsList: null,
       form: {
         title: null,
-        type: null
+        type: ''
       }
     };
   },
@@ -20182,7 +20182,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('groups', this.form).then(function (res) {
         if (res.status === 201) {
           _this.form.title = null;
-          _this.form.type = null;
+          _this.form.type = '';
 
           _this.getGroupsList();
         }
@@ -20400,7 +20400,7 @@ __webpack_require__.r(__webpack_exports__);
       groupsList: null,
       form: {
         title: null,
-        group_id: null,
+        group_id: '',
         amount: null
       }
     };
@@ -20437,7 +20437,7 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         _this3.form.title = null;
-        _this3.form.group_id = null;
+        _this3.form.group_id = '';
         _this3.form.amount = null;
       })["catch"](function (error) {// console.log(error)
       });
@@ -20979,7 +20979,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   props: ['basket'],
   data: function data() {
     return {
-      gameGroupID: null,
+      gameGroupID: '',
       gamesList: null,
       gameGroupsList: null,
       gameForm: {
@@ -21023,6 +21023,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }
                 }).then(function (res) {
                   _this2.gamesList = res.data.data;
+                  _this2.gameForm.orderable = _this2.gamesList[0].id;
                 });
 
               case 2:
@@ -21131,7 +21132,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   props: ['basket'],
   data: function data() {
     return {
-      productGroupID: null,
+      productGroupID: '',
       productList: null,
       productGroupsList: null,
       productForm: {
@@ -21176,6 +21177,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }
                 }).then(function (res) {
                   _this2.productList = res.data.data;
+                  _this2.productForm.orderable = _this2.productList[0].id;
                 });
 
               case 2:
@@ -21737,7 +21739,15 @@ var _hoisted_2 = {
 var _hoisted_3 = {
   "class": "md:flex items-center pb-4 mb-4 border-b"
 };
-var _hoisted_4 = ["value"];
+
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  disabled: "",
+  value: ""
+}, "Please select", -1
+/* HOISTED */
+);
+
+var _hoisted_5 = ["value"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_GamesTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("GamesTable");
 
@@ -21755,12 +21765,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.form.group_id = $event;
     }),
     "class": "mb-4 md:mb-0 w-full form-select appearance-none mr-4 form-control block md:w-1/4 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none"
-  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.groupsList, function (group) {
+  }, [_hoisted_4, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.groupsList, function (group) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: group.id
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(group.title), 9
     /* TEXT, PROPS */
-    , _hoisted_4);
+    , _hoisted_5);
   }), 256
   /* UNKEYED_FRAGMENT */
   ))], 512
@@ -21815,18 +21825,25 @@ var _hoisted_3 = {
 };
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  disabled: "",
+  value: ""
+}, "Please select", -1
+/* HOISTED */
+);
+
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "Product"
 }, "Product", -1
 /* HOISTED */
 );
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: "Game"
 }, "Game", -1
 /* HOISTED */
 );
 
-var _hoisted_6 = [_hoisted_4, _hoisted_5];
+var _hoisted_7 = [_hoisted_4, _hoisted_5, _hoisted_6];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_GroupsTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("GroupsTable");
 
@@ -21844,7 +21861,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.form.type = $event;
     }),
     "class": "mb-4 md:mb-0 w-full form-select appearance-none mr-4 form-control block md:w-1/4 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none"
-  }, _hoisted_6, 512
+  }, _hoisted_7, 512
   /* NEED_PATCH */
   ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.type]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[2] || (_cache[2] = function () {
@@ -22207,7 +22224,15 @@ var _hoisted_2 = {
 var _hoisted_3 = {
   "class": "md:flex items-center pb-4 mb-4 border-b"
 };
-var _hoisted_4 = ["value"];
+
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  disabled: "",
+  value: ""
+}, "Please select", -1
+/* HOISTED */
+);
+
+var _hoisted_5 = ["value"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_ProductsTable = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ProductsTable");
 
@@ -22225,12 +22250,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.form.group_id = $event;
     }),
     "class": "mb-4 md:mb-0 w-full form-select appearance-none mr-4 form-control block md:w-1/4 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none"
-  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.groupsList, function (group) {
+  }, [_hoisted_4, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.groupsList, function (group) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: group.id
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(group.title), 9
     /* TEXT, PROPS */
-    , _hoisted_4);
+    , _hoisted_5);
   }), 256
   /* UNKEYED_FRAGMENT */
   ))], 512
@@ -23862,20 +23887,28 @@ var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 var _hoisted_3 = {
   "class": "md:flex items-center pb-2 mb-2"
 };
-var _hoisted_4 = ["value"];
+
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  disabled: "",
+  value: ""
+}, "Please select", -1
+/* HOISTED */
+);
+
 var _hoisted_5 = ["value"];
+var _hoisted_6 = ["value"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.gameGroupID = $event;
     }),
-    "class": "form-select appearance-none mr-4 form-control block mb-2 md:mb-0 w-full md:w-1/4 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none"
-  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.gameGroupsList, function (group) {
+    "class": "form-select appearance-none mr-4 form-control block mb-2 md:mb-0 w-full md:w-2/6 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none"
+  }, [_hoisted_4, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.gameGroupsList, function (group) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: group.id
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(group.title), 9
     /* TEXT, PROPS */
-    , _hoisted_4);
+    , _hoisted_5);
   }), 256
   /* UNKEYED_FRAGMENT */
   ))], 512
@@ -23886,13 +23919,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.gameForm.orderable = $event;
     }),
-    "class": "form-select appearance-none mr-4 form-control block mb-2 md:mb-0 w-full px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none"
+    "class": "form-select appearance-none mr-4 form-control block mb-2 md:mb-0 w-full md:w-2/6 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none"
   }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.gamesList, function (games) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: games.id
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(games.title), 9
     /* TEXT, PROPS */
-    , _hoisted_5);
+    , _hoisted_6);
   }), 256
   /* UNKEYED_FRAGMENT */
   ))], 512
@@ -23901,7 +23934,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[2] || (_cache[2] = function () {
       return $options.submitGameOrder && $options.submitGameOrder.apply($options, arguments);
     }),
-    "class": "w-full md:w-1/6 mb-2 md:mb-0 text-center border border-current hover:border-blue-500 transition-all duration-300 ease-in-out cursor-pointer hover:text-blue-500 rounded px-4 py-1"
+    "class": "w-full md:w-2/6 mb-2 md:mb-0 text-center border border-current hover:border-blue-500 transition-all duration-300 ease-in-out cursor-pointer hover:text-blue-500 rounded px-4 py-1"
   }, " Start ")])]);
 }
 
@@ -24159,20 +24192,28 @@ var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 var _hoisted_3 = {
   "class": "md:flex items-center pb-2 mb-2"
 };
-var _hoisted_4 = ["value"];
+
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+  disabled: "",
+  value: ""
+}, "Please select", -1
+/* HOISTED */
+);
+
 var _hoisted_5 = ["value"];
+var _hoisted_6 = ["value"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.productGroupID = $event;
     }),
     "class": "mb-2 md:mb-0 form-select appearance-none mr-4 form-control block w-full md:w-2/6 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none"
-  }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.productGroupsList, function (group) {
+  }, [_hoisted_4, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.productGroupsList, function (group) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: group.id
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(group.title), 9
     /* TEXT, PROPS */
-    , _hoisted_4);
+    , _hoisted_5);
   }), 256
   /* UNKEYED_FRAGMENT */
   ))], 512
@@ -24187,7 +24228,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       value: product.id
     }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(product.title), 9
     /* TEXT, PROPS */
-    , _hoisted_5);
+    , _hoisted_6);
   }), 256
   /* UNKEYED_FRAGMENT */
   ))], 512
