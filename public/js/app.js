@@ -21069,6 +21069,16 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     gamesList: {}
   },
+  created: function created() {
+    this.startTimer();
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    setInterval(function () {
+      _this.startTimer();
+    }, 1000);
+  },
   data: function data() {
     return {
       deleteItem: null,
@@ -21076,6 +21086,38 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    startTimer: function startTimer() {
+      this.gamesList.forEach(function (game) {
+        if (game.stopped_at === null) {
+          var timeNow = new Date().getTime();
+          var created_at = new Date(game.created_at);
+          var timeDifference = timeNow - created_at;
+          var millisecondsInOneSecond = 1000;
+          var millisecondsInOneMinute = millisecondsInOneSecond * 60;
+          var millisecondsInOneHour = millisecondsInOneMinute * 60;
+          var millisecondsInOneDay = millisecondsInOneHour * 24;
+          var differenceInDays = timeDifference / millisecondsInOneDay;
+          var remainderDifferenceInHours = timeDifference % millisecondsInOneDay / millisecondsInOneHour;
+          var remainderDifferenceInMinutes = timeDifference % millisecondsInOneHour / millisecondsInOneMinute;
+          var remainderDifferenceInSeconds = timeDifference % millisecondsInOneMinute / millisecondsInOneSecond;
+          var remainingDays = Math.floor(differenceInDays);
+          var remainingHours = Math.floor(remainderDifferenceInHours);
+          var remainingMinutes = Math.floor(remainderDifferenceInMinutes);
+          var remainingSeconds = Math.floor(remainderDifferenceInSeconds);
+          game.timer = "";
+
+          if (remainingDays > 0) {
+            game.timer += remainingDays + ":";
+          }
+
+          if (remainingHours > 0) {
+            game.timer += remainingHours + ":";
+          }
+
+          game.timer += remainingMinutes + ":" + remainingSeconds;
+        }
+      });
+    },
     format: function format(value) {
       return value.toString().replace(/(\d)(?=(\d{3})+([^\d]|$))/g, '$1,');
     },
@@ -21084,22 +21126,22 @@ __webpack_require__.r(__webpack_exports__);
       this.modalShowing = true;
     },
     deleteOrder: function deleteOrder(id) {
-      var _this = this;
+      var _this2 = this;
 
       this.deleteItem = null;
       this.modalShowing = false;
       axios["delete"]('orders/' + id).then(function (res) {
-        _this.$emit('delete');
+        _this2.$emit('delete');
       })["catch"](function (error) {
         console.log(error.response.data.errors);
       });
     },
     stopGame: function stopGame(game) {
-      var _this2 = this;
+      var _this3 = this;
 
       if (game.stopped_at === null) {
         axios.get('orders/' + game.id).then(function (res) {
-          _this2.$emit('stopGame');
+          _this3.$emit('stopGame');
         })["catch"](function (error) {
           console.log(error.response.data.errors);
         });
@@ -24039,30 +24081,34 @@ var _hoisted_14 = {
   key: 0
 };
 var _hoisted_15 = {
-  key: 1
+  key: 1,
+  "class": "text-blue-500"
 };
 var _hoisted_16 = {
+  key: 2
+};
+var _hoisted_17 = {
   "class": "px-3 py-3 md:w-2/12"
 };
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "md:hidden uppercase text-gray-700 mr-2 font-medium"
 }, "Price:", -1
 /* HOISTED */
 );
 
-var _hoisted_18 = {
+var _hoisted_19 = {
   key: 0
 };
-var _hoisted_19 = {
+var _hoisted_20 = {
   key: 1
 };
-var _hoisted_20 = {
+var _hoisted_21 = {
   "class": "md:w-2/12 flex m-2 md:m-0 rounded-md border md:border-none"
 };
-var _hoisted_21 = ["onClick"];
+var _hoisted_22 = ["onClick"];
 
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
   xmlns: "http://www.w3.org/2000/svg",
   "class": "h-6 w-6",
   fill: "none",
@@ -24081,10 +24127,10 @@ var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_23 = [_hoisted_22];
-var _hoisted_24 = ["onClick"];
+var _hoisted_24 = [_hoisted_23];
+var _hoisted_25 = ["onClick"];
 
-var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
   xmlns: "http://www.w3.org/2000/svg",
   "class": "h-6 w-6",
   fill: "none",
@@ -24099,33 +24145,33 @@ var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 /* HOISTED */
 );
 
-var _hoisted_26 = [_hoisted_25];
+var _hoisted_27 = [_hoisted_26];
 
-var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", {
   "class": "text-lg font-bold text-gray-900"
 }, "Delete Order", -1
 /* HOISTED */
 );
 
-var _hoisted_28 = {
+var _hoisted_29 = {
   "class": "mb-6 text-sm"
 };
 
-var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Do you really want to delete ");
+var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Do you really want to delete ");
 
-var _hoisted_30 = {
+var _hoisted_31 = {
   "class": "text-red-600"
 };
 
-var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("? ");
+var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("? ");
 
-var _hoisted_32 = {
+var _hoisted_33 = {
   "class": "flex mt-8"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Modal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Modal");
 
-  return $props.gamesList != null && $props.gamesList.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.gamesList, function (game, index) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [$props.gamesList != null && $props.gamesList.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.gamesList, function (game, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["w-full hover:bg-gray-50 md:flex md:justify-between font-medium pb-2 md:pb-0", index === $props.gamesList.length - 1 ? 'md:hover:rounded-b-md' : 'border-b'])
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(index + 1), 1
@@ -24140,23 +24186,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* TEXT */
     )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, game.stopped_at != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(game.stopped_at) + "(" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(game.diff) + ")", 1
     /* TEXT */
-    )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_15, "-"))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, game.price != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.format(game.price)), 1
+    )) : game.timer ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(game.timer), 1
     /* TEXT */
-    )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_19, "-"))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_16, "-"))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, game.price != null ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.format(game.price)), 1
+    /* TEXT */
+    )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_20, "-"))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
       onClick: function onClick($event) {
         return $options.stopGame(game);
       },
       "class": "w-1/2 px-3 py-2 rounded-l-md md:rounded-none bg-blue-500 text-gray-200 md:text-inherit md:bg-inherit items-center flex justify-center hover:text-gray-800 md:hover:text-blue-500 uppercase"
-    }, _hoisted_23, 8
+    }, _hoisted_24, 8
     /* PROPS */
-    , _hoisted_21), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    , _hoisted_22), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
       onClick: function onClick($event) {
         return $options.confirmDelete(game);
       },
       "class": "w-1/2 px-3 py-2 rounded-r-md md:rounded-none bg-gray-800 text-gray-200 md:text-inherit md:bg-inherit items-center flex justify-center hover:text-blue-500 uppercase"
-    }, _hoisted_26, 8
+    }, _hoisted_27, 8
     /* PROPS */
-    , _hoisted_24)])], 2
+    , _hoisted_25)])], 2
     /* CLASS */
     );
   }), 256
@@ -24168,9 +24216,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     })
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [_hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_28, [_hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.deleteItem.orderable_title), 1
+      return [_hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_29, [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.deleteItem.orderable_title), 1
       /* TEXT */
-      ), _hoisted_31]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+      ), _hoisted_32]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         "class": "px-4 py-1 rounded-md border hover:border-blue-500 hover:text-blue-500",
         onClick: _cache[0] || (_cache[0] = function ($event) {
           return $options.deleteOrder($data.deleteItem.id);
@@ -24187,7 +24235,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 
   }, 8
   /* PROPS */
-  , ["showing"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
+  , ["showing"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 }
 
 /***/ }),
