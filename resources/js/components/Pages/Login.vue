@@ -11,6 +11,10 @@
                         placeholder="Enter your email"
                         type="email"
                         v-model="form.email">
+
+                    <span class="text-red-500 text-xs italic mt-4" v-if="errors.email">
+                        {{ errors.email[0] }}
+                    </span>
                 </div>
                 <div class="mt-4 w-full">
                     <label for="password" class="text-gray-400">Password</label>
@@ -33,7 +37,8 @@
             </div>
         </div>
 
-        <div class="hidden md:block w-1/2 md:flex md:flex-col" style="background-image: url('img/bg-login.jpg'); background-size: cover;">
+        <div class="hidden md:block w-1/2 md:flex md:flex-col"
+             style="background-image: url('img/bg-login.jpg'); background-size: cover;">
             <div
                 class="mt-auto p-8 text-white mb-20 mx-20 bg-gray-300 h-1/3 rounded bg-opacity-40 backdrop-blur border border-gray-200">
                 <span class="text-lg font-bold">
@@ -60,6 +65,7 @@ export default {
                 .then(() => {
                     this.$router.push({name: "Dashboard"});
                 }).catch((error) => {
+                console.log(error.response.data);
                 this.errors = error.response.data.errors;
             })
         },
