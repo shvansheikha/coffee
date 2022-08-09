@@ -27,6 +27,11 @@
 
                     <div class="mt-auto mt-8">
                         <div
+                            @click="printBasket"
+                            class="text-center w-full mt-2 border border-current hover:border-blue-500 transition-all duration-300 ease-in-out cursor-pointer hover:text-blue-500 rounded px-4 py-1">
+                            Print
+                        </div>
+                        <div
                             @click="closeBasket"
                             class="text-center w-full mt-2 border border-current hover:border-blue-500 transition-all duration-300 ease-in-out cursor-pointer hover:text-blue-500 rounded px-4 py-1">
                             Close
@@ -77,6 +82,10 @@ export default {
     methods: {
         format(value) {
             return value.toString().replace(/(\d)(?=(\d{3})+([^\d]|$))/g, '$1,')
+        },
+        printBasket() {
+            let routeData = this.$router.resolve({name: 'Print', params: {basket: this.basket}});
+            window.open(routeData.href, '_blank');
         },
         closeBasket() {
             axios.put('baskets/' + this.basket, {closed: true})
