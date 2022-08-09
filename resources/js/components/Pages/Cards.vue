@@ -4,6 +4,7 @@
             class="w-full px-8 pt-6 pb-20 md:px-10 lg:px-20 md:pt-20 flex-grow h-screen flex flex-col overscroll-auto overflow-auto">
 
             <div class="md:flex items-center pb-4 mb-4 border-b">
+
                 <input type="text"
                        name="title"
                        v-model="form.title"
