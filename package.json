@@ -26,6 +26,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "moment-jalaali": "^0.9.6",
         "vuex": "^4.0.2"
     }
 }
