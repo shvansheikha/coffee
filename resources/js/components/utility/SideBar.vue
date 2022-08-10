@@ -64,6 +64,15 @@
 
                 <li v-if="userIsLogin">
                     <div
+                        v-on:click="settingModalShowing = true"
+                        class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
+                 ease-in-out transform">
+                        <div>Setting</div>
+                    </div>
+                </li>
+
+                <li v-if="userIsLogin">
+                    <div
                         v-on:click="logoutModalShowing = true"
                         class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
                  ease-in-out transform">
@@ -181,6 +190,15 @@
 
                         <li v-if="userIsLogin">
                             <div
+                                v-on:click="settingModalShowing = true"
+                                class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
+                 ease-in-out transform">
+                                <div>Setting</div>
+                            </div>
+                        </li>
+
+                        <li v-if="userIsLogin">
+                            <div
                                 v-on:click="logoutModalShowing = true"
                                 class="py-1.5 px-4 my-1 block hover:text-blue-700 rounded-lg cursor-pointer hover:border-gray-300 hover:bg-blue-50 transition duration-300
                  ease-in-out transform">
@@ -233,6 +251,31 @@
             </div>
         </Modal>
 
+        <Modal :showing="settingModalShowing" @close="settingModalShowing = false">
+            <h2 class="text-lg font-bold text-gray-900">Setting</h2>
+            <span class="mb-6 text-sm">Do you really want to logout?</span>
+
+            <input
+                class="mt-2 w-full shadow-sm text-gray-700 rounded-md border border-gray-200 focus:outline-none focus:border-gray-500 px-4 py-1"
+                placeholder="Print Title"
+                type="text"
+                v-model="user.coffee_title">
+
+            <div class="flex mt-8">
+                <button
+                    class="px-4 py-1.5 rounded border hover:border-blue-500 hover:text-blue-700"
+                    @click="saveSetting">
+                    Save
+                </button>
+
+                <button
+                    class="px-4 py-1.5 rounded border ml-4 hover:border-blue-500 hover:text-blue-700"
+                    @click="settingModalShowing = false">
+                    Close
+                </button>
+            </div>
+        </Modal>
+
     </div>
 </template>
 
@@ -246,8 +289,10 @@ export default {
     data() {
         return {
             logoutModalShowing: false,
+            settingModalShowing: false,
             userIsLogin: false,
-            menuIsOpen: false
+            menuIsOpen: false,
+            user: null
         }
     },
     created() {
@@ -262,11 +307,18 @@ export default {
 
     watch: {
         $route(to, from) {
-            this.menuIsOpen= false;
+            this.menuIsOpen = false;
             this.authenticated()
         }
     },
     methods: {
+        saveSetting() {
+            axios.put('/user', this.user)
+                .then((res) => {
+                    this.user = res.data.data;
+                })
+        },
+
         logout() {
             axios.get('logout')
                 .then(function (response) {
@@ -274,9 +326,10 @@ export default {
                 });
         },
         authenticated() {
-            axios.get('authenticated')
+            axios.get('user')
                 .then((response) => {
                     this.userIsLogin = true;
+                    this.user = response.data;
                 }).catch(() => {
                 this.userIsLogin = false;
             });

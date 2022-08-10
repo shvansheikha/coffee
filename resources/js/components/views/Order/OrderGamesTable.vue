@@ -155,35 +155,38 @@ export default {
     },
     methods: {
         startTimer: function () {
-            this.gamesList.forEach(function (game) {
-                if (game.stopped_at === null) {
-                    const timeNow = new Date().getTime();
-                    const created_at = new Date(game.created_at);
-                    const timeDifference = timeNow - created_at;
-                    const millisecondsInOneSecond = 1000;
-                    const millisecondsInOneMinute = millisecondsInOneSecond * 60;
-                    const millisecondsInOneHour = millisecondsInOneMinute * 60;
-                    const millisecondsInOneDay = millisecondsInOneHour * 24;
-                    const differenceInDays = timeDifference / millisecondsInOneDay;
-                    const remainderDifferenceInHours = (timeDifference % millisecondsInOneDay) / millisecondsInOneHour;
-                    const remainderDifferenceInMinutes = (timeDifference % millisecondsInOneHour) / millisecondsInOneMinute;
-                    const remainderDifferenceInSeconds = (timeDifference % millisecondsInOneMinute) / millisecondsInOneSecond;
-                    const remainingDays = Math.floor(differenceInDays);
-                    const remainingHours = Math.floor(remainderDifferenceInHours);
-                    const remainingMinutes = Math.floor(remainderDifferenceInMinutes);
-                    const remainingSeconds = Math.floor(remainderDifferenceInSeconds);
-                    game.timer = "";
-                    if (remainingDays > 0) {
-                        game.timer += remainingDays + ":";
-                    }
+            if (this.gamesList!=null) {
 
-                    if (remainingHours > 0) {
-                        game.timer += remainingHours + ":"
-                    }
+                this.gamesList.forEach(function (game) {
+                    if (game.stopped_at === null) {
+                        const timeNow = new Date().getTime();
+                        const created_at = new Date(game.created_at);
+                        const timeDifference = timeNow - created_at;
+                        const millisecondsInOneSecond = 1000;
+                        const millisecondsInOneMinute = millisecondsInOneSecond * 60;
+                        const millisecondsInOneHour = millisecondsInOneMinute * 60;
+                        const millisecondsInOneDay = millisecondsInOneHour * 24;
+                        const differenceInDays = timeDifference / millisecondsInOneDay;
+                        const remainderDifferenceInHours = (timeDifference % millisecondsInOneDay) / millisecondsInOneHour;
+                        const remainderDifferenceInMinutes = (timeDifference % millisecondsInOneHour) / millisecondsInOneMinute;
+                        const remainderDifferenceInSeconds = (timeDifference % millisecondsInOneMinute) / millisecondsInOneSecond;
+                        const remainingDays = Math.floor(differenceInDays);
+                        const remainingHours = Math.floor(remainderDifferenceInHours);
+                        const remainingMinutes = Math.floor(remainderDifferenceInMinutes);
+                        const remainingSeconds = Math.floor(remainderDifferenceInSeconds);
+                        game.timer = "";
+                        if (remainingDays > 0) {
+                            game.timer += remainingDays + ":";
+                        }
 
-                    game.timer += remainingMinutes + ":" + remainingSeconds
-                }
-            });
+                        if (remainingHours > 0) {
+                            game.timer += remainingHours + ":"
+                        }
+
+                        game.timer += remainingMinutes + ":" + remainingSeconds
+                    }
+                });
+            }
         },
         format(value) {
             return value.toString().replace(/(\d)(?=(\d{3})+([^\d]|$))/g, '$1,')
