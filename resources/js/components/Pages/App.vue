@@ -32,6 +32,7 @@ export default {
                 this.currentRouteName === 'Register' ||
                 this.currentRouteName === 'forgot-password' ||
                 this.currentRouteName === 'reset-password' ||
+                this.currentRouteName === 'Print' ||
                 this.currentRouteName === '404');
         }
     },

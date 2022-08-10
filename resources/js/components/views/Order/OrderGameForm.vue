@@ -5,7 +5,8 @@
 
             <select
                 v-model="gameGroupID"
-                class="form-select appearance-none mr-4 form-control block mb-2 md:mb-0 w-full md:w-1/4 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none">
+                class="form-select appearance-none mr-4 form-control block mb-2 md:mb-0 w-full md:w-2/6 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none">
+                <option disabled value="">Please select</option>
                 <option v-for="group in gameGroupsList" v-bind:value="group.id">{{ group.title }}</option>
             </select>
 
@@ -13,12 +14,12 @@
                 id="games"
                 name="game"
                 v-model="gameForm.orderable"
-                class="form-select appearance-none mr-4 form-control block mb-2 md:mb-0 w-full px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none">
+                class="form-select appearance-none mr-4 form-control block mb-2 md:mb-0 w-full md:w-2/6 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none">
                 <option v-for="games in gamesList" v-bind:value="games.id">{{ games.title }}</option>
             </select>
 
             <div @click="submitGameOrder"
-                 class="w-full md:w-1/6 mb-2 md:mb-0 text-center border border-current hover:border-blue-500 transition-all duration-300 ease-in-out cursor-pointer hover:text-blue-500 rounded px-4 py-1">
+                 class="w-full md:w-2/6 mb-2 md:mb-0 text-center border border-current hover:border-blue-500 transition-all duration-300 ease-in-out cursor-pointer hover:text-blue-500 rounded px-4 py-1">
                 Start
             </div>
         </div>
@@ -32,7 +33,7 @@ export default {
     props: ['basket'],
     data() {
         return {
-            gameGroupID: null,
+            gameGroupID: '',
             gamesList: null,
             gameGroupsList: null,
             gameForm: {
@@ -44,7 +45,7 @@ export default {
     watch: {
         gameGroupID() {
             this.getGames();
-        }
+        },
     },
     created() {
         this.getGamesGroupsList();
@@ -60,6 +61,7 @@ export default {
             await axios.get('games', {params: {group: this.gameGroupID}})
                 .then((res) => {
                     this.gamesList = res.data.data;
+                    this.gameForm.orderable = this.gamesList[0].id
                 })
         },
         submitGameOrder() {

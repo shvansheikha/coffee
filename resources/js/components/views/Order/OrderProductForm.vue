@@ -6,6 +6,7 @@
             <select
                 v-model="productGroupID"
                 class="mb-2 md:mb-0 form-select appearance-none mr-4 form-control block w-full md:w-2/6 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none">
+                <option disabled value="">Please select</option>
                 <option v-for="group in productGroupsList" v-bind:value="group.id">{{ group.title }}</option>
             </select>
 
@@ -34,7 +35,7 @@ export default {
     props: ['basket'],
     data() {
         return {
-            productGroupID: null,
+            productGroupID: '',
             productList: null,
             productGroupsList: null,
             productForm: {
@@ -63,6 +64,7 @@ export default {
             await axios.get('products', {params: {group: this.productGroupID}})
                 .then((res) => {
                     this.productList = res.data.data;
+                    this.productForm.orderable = this.productList[0].id
                 })
         },
         submitOrder() {

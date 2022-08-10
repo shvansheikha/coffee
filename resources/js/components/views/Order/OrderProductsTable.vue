@@ -62,7 +62,7 @@
 
                     <div
                         @click="confirmDelete(order)"
-                        class="w-full px-3 py-2 rounded-md md:rounded-none bg-gray-800 text-gray-200 md:text-inherit md:bg-inherit items-center flex justify-center hover:text-blue-500 uppercase">
+                        class="w-full px-3 py-2 rounded-md md:rounded-none bg-gray-800 text-gray-200 md:text-inherit md:bg-inherit items-center flex justify-center hover:text-red-500 uppercase">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
                              viewBox="0 0 24 24"
                              stroke="currentColor" stroke-width="2">

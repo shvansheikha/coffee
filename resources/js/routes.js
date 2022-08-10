@@ -12,6 +12,7 @@ import Baskets from './components/Pages/Baskets'
 import BasketDetail from './components/Pages/BasketDetail'
 import Order from './components/Pages/Order'
 import Products from './components/Pages/Products'
+import Print from './components/Pages/Print'
 import axios from "axios";
 
 const routes = [
@@ -20,6 +21,13 @@ const routes = [
         component: Home,
         name: "Home",
         meta: {requiresAuth: false}
+    },
+    {
+        path: '/print/:basket',
+        name: "Print",
+        component: Print,
+        props: true,
+        meta: {requiresAuth: true}
     },
     {
         path: '/register',

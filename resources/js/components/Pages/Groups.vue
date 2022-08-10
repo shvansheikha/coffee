@@ -12,6 +12,7 @@
                 <select
                     v-model="form.type"
                     class="mb-4 md:mb-0 w-full form-select appearance-none mr-4 form-control block md:w-1/4 px-3 py-1 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white hover:border-blue-600 focus:border-blue-600 focus:outline-none">
+                    <option disabled value="">Please select</option>
                     <option value="Product">Product</option>
                     <option value="Game">Game</option>
                 </select>
@@ -40,7 +41,7 @@ export default {
             groupsList: null,
             form: {
                 title: null,
-                type: null,
+                type: '',
             }
         }
     },
@@ -53,7 +54,7 @@ export default {
                 .then((res) => {
                     if (res.status === 201) {
                         this.form.title = null;
-                        this.form.type = null;
+                        this.form.type = '';
                         this.getGroupsList()
                     }
                 })

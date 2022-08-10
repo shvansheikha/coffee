@@ -20,7 +20,9 @@ class OrderResource extends JsonResource
             'started_at' => !empty($this->started_at) ? Carbon::parse($this->started_at)->format('H:i:s') : null,
             'stopped_at' => !empty($this->stopped_at) ? Carbon::parse($this->stopped_at)->format('H:i:s') : null,
             'price' => $this->price,
-            'diff' => $this->diff
+            'diff' => $this->diff,
+            'created_at' => $this->created_at->format('Y-m-d H:i:s'),
+            'updated_at' => $this->updated_at->format('Y-m-d H:i:s')
         ];
     }
 }
