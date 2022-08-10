@@ -3,10 +3,10 @@
         <div
             class="w-full flex-grow h-screen flex flex-col overscroll-auto overflow-auto">
 
-            <div class="w-full lg:w-1/6 text-gray-900 text-center">
+            <div class="w-full lg:w-1/3 text-gray-900 text-center">
 
                 <div class="py-2 px-2">
-                    <div class="font-bold text-2xl">کافه گیم والا</div>
+                    <div class="font-bold text-2xl">{{user.coffee_title}}</div>
                     <div class="mt-3 text-xs text-left">
                         <span>{{ moment(new Date()).format("jYYYY/jM/jD HH:mm") }}</span>
                     </div>
@@ -15,13 +15,9 @@
 
                     <div class="text-2xs">
                         <div v-if="productsList != null && productsList.length > 0"
-                             class="w-full bg-white text-left text-gray-500 cursor-pointer">
+                             class="w-full bg-white text-left text-gray-900 cursor-pointer">
                             <div
-                                class="text-gray-700 uppercase flex justify-between font-medium">
-
-                                <div class="text-center px-1 py-1 w-1/12">
-                                    #
-                                </div>
+                                class="text-gray-900 uppercase flex justify-between font-medium">
 
                                 <div class="px-1 py-1 w-4/12">
                                     Title
@@ -35,17 +31,13 @@
                                     Amount
                                 </div>
 
-                                <div class="px-1 py-1 w-2/12">
+                                <div class="px-1 py-1 w-3/12">
                                     Price
                                 </div>
                             </div>
 
                             <div v-for="(order, index) in productsList"
                                  class="w-full flex justify-between font-medium">
-
-                                <div class="text-center px-1 py-1 w-1/12 w-1/12">
-                                    {{ index + 1 }}
-                                </div>
 
                                 <div class="px-1 py-1 w-4/12">
                                     <span>{{ order.orderable_title }}</span>
@@ -59,7 +51,7 @@
                                     <span>{{ format(order.amount) }}</span>
                                 </div>
 
-                                <div class="px-1 py-1 w-2/12">
+                                <div class="px-1 py-1 w-3/12">
                                     <span v-if="(order.price != null)">{{ format(order.price) }}</span>
                                     <span v-else>-</span>
                                 </div>
@@ -67,13 +59,9 @@
                         </div>
 
                         <div v-if="orderGamesList != null && orderGamesList.length > 0"
-                             class="w-full bg-white text-left text-gray-500 cursor-pointer mt-4">
+                             class="w-full bg-white text-left text-gray-900 cursor-pointer mt-4">
                             <div
-                                class="text-gray-700 uppercase flex justify-between font-medium">
-
-                                <div class="text-center px-1 py-1 w-1/12">
-                                    #
-                                </div>
+                                class="text-gray-900 uppercase flex justify-between font-medium">
 
                                 <div class="px-1 py-1 w-4/12">
                                     Game
@@ -87,17 +75,13 @@
                                     Amount
                                 </div>
 
-                                <div class="px-1 py-1 w-2/12">
+                                <div class="px-1 py-1 w-3/12">
                                     Price
                                 </div>
                             </div>
 
                             <div v-for="(game, index) in orderGamesList"
                                  class="w-full flex justify-between font-medium">
-
-                                <div class="text-center px-1 py-1 w-1/12">
-                                    {{ index + 1 }}
-                                </div>
 
                                 <div class="px-1 py-1 w-4/12">
                                     <span>{{ game.orderable_title }}</span>
@@ -113,7 +97,7 @@
                                     <span>{{ game.amount }}</span>
                                 </div>
 
-                                <div class="px-1 py-1 w-2/12">
+                                <div class="px-1 py-1 w-3/12">
                                     <span v-if="(game.price != null)">{{ format(game.price) }}</span>
                                     <span v-else>-</span>
                                 </div>
@@ -145,6 +129,7 @@ import OrderGamesTable from "../views/Order/OrderGamesTable";
 import OrderProductsTable from "../views/Order/OrderProductsTable";
 import OrderProductForm from "../views/Order/OrderProductForm";
 import moment from 'moment-jalaali'
+import axios from "axios";
 
 
 export default {
@@ -156,10 +141,12 @@ export default {
             productsList: null,
             basketObject: null,
             dateTime: null,
+            user: null,
         }
     },
     created() {
         this.date();
+        this.getUser();
         this.getGamesOrder();
         this.getProductOrder();
         this.getBasket();
@@ -171,6 +158,13 @@ export default {
             const date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
             const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
             this.dateTime = date + ' ' + time;
+        },
+        getUser() {
+            axios.get('user')
+                .then((res) => {
+                    this.user = res.data;
+                }).catch(() => {
+            });
         },
         format(value) {
             return value.toString().replace(/(\d)(?=(\d{3})+([^\d]|$))/g, '$1,')
